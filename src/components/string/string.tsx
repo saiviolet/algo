@@ -5,11 +5,11 @@ import {SolutionLayout} from "../ui/solution-layout/solution-layout";
 // ui
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
-import {Circle} from "../ui/circle/circle";
 // стили
 import styles from './string.module.css';
+import {outputString, sort} from "../../utils/utils";
+import {getReverseString} from "../../utils/sorting";
 
-type TOutputString = (letters: { letter: string, key: string}[]) => JSX.Element[];
 interface IState {
   buttonLoader: boolean,
   buttonDisabled: boolean,
@@ -18,6 +18,7 @@ interface IState {
   visibleString: boolean
 }
 export const StringComponent: React.FC = () => {
+  const objects = Array.from(document.querySelectorAll('.letter'));
   const [state, setState] = useState<IState>({
     buttonLoader: false,
     buttonDisabled: true,
@@ -25,12 +26,8 @@ export const StringComponent: React.FC = () => {
     string: null,
     visibleString: false,
   });
+  const [animations, setAnimations] = useState();
 
-  const outputString:TOutputString = (letters) => {
-    return letters.map((letter:any) => <li key={letter.key}>
-      <Circle letter={letter.letter}/>
-    </li>)
-  };
   const inputHandler = (evt: React.FormEvent<HTMLInputElement>) => {
     console.log('inputHandler');
     let input = evt.target as HTMLInputElement;
@@ -43,10 +40,13 @@ export const StringComponent: React.FC = () => {
       return {letter, key: nanoid(10)}
     });
     const str = outputString(letters);
+    setTimeout(() => {
+      console.log(objects);
+      sort('revert', letters, setAnimations, objects);
+      // getReverseString(letters)
+    }, 500);
     setState({...state, inputValue: '', visibleString: true, string: str});
   };
-
-
 
   return (
     <SolutionLayout title="Строка" >

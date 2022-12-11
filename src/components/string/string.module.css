@@ -1,0 +1,36 @@
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 286px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  min-width: 567px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.input {
+  max-width: 377px;
+  margin-right: 12px;
+}
+
+.button {
+  min-width: 175px;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 0 auto;
+  padding: 0;
+  list-style-type: none;
+}
+

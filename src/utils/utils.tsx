@@ -1,8 +1,5 @@
-
-import {getReverseString} from "./sorting";
-import {ElementStates} from "../types/element-states";
-import {IState} from "../components/string/string";
 type Tswap = (array: any[], i: number, min: number) => void;
+type TCompare = (a: string, b: string) => number;
 // ф-ия для правильно вывода окончания в подсказке к инпуту
 export const declination = (count: number | undefined) => {
   const array = ['символ', 'символа', 'символов'];
@@ -27,4 +24,10 @@ export const swap:Tswap = (array, i, min) => {
   const copy = array[i];
   array[i] = array[min];
   array[min] = copy;
+};
+
+// ф-ия для сравнения
+export const compare:TCompare = (a, b) => {
+  if (a === b) return 0;
+  return a < b ? -1 : 1;
 };

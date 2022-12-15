@@ -1,52 +1,67 @@
-import React, {useState} from "react";
+import React, {useReducer} from "react";
 import { nanoid } from 'nanoid';
 // компоненты
 import {SolutionLayout} from "../ui/solution-layout/solution-layout";
 // ui
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
+import {Circle} from "../ui/circle/circle";
+// ф-ии
+import {swap, wait} from "../../utils/utils";
+// типы
+import {ElementStates} from "../../types/element-states";
+import {ILetter, IState} from "../../types/components";
 // стили
 import styles from './string.module.css';
-import {ElementStates} from "../../types/element-states";
-import {Circle} from "../ui/circle/circle";
-import {getReverseString} from "../../utils/sorting";
 
-export interface IState {
-  buttonLoader: boolean;
-  buttonDisabled: boolean;
-  inputValue: string;
-  string: ILetter[] | null;
-  visibleString: boolean;
-}
-
-export interface ILetter {
-  letter: string;
-  key: string;
-  state: ElementStates;
-}
 export const StringComponent: React.FC = () => {
-  const [state, setState] = useState<IState>({
+
+  const initialState:IState = {
     buttonLoader: false,
     buttonDisabled: true,
     inputValue: '',
     string: null,
-    visibleString: false,
-  });
-  const [animations, setAnimations] = useState();
-  const [circleColor, setCircleColor] = useState(ElementStates.Default);
+  };
+
+  const [state, updateState] = useReducer<(state: IState, updates: any) => IState>(
+    (state, updates) => ({ ...state, ...updates }),
+    initialState
+  );
+
+  const getReverseString = async (letters: ILetter[]) => {
+    updateState({ buttonLoader: true })
+    let last;
+    for (let i = 0; i < letters.length; i++) {
+      last = (letters.length - 1) - i;
+      if(i < last) {
+        letters[i].state = ElementStates.Changing;
+        letters[last].state = ElementStates.Changing;
+        updateState({ string: letters });
+        swap(letters, i, last);
+        await wait(1000);
+      }
+      letters[i].state = ElementStates.Modified;
+      letters[last].state = ElementStates.Modified;
+      updateState({ string: letters });
+    };
+    updateState({ buttonLoader: false })
+  };
   const inputHandler = (evt: React.FormEvent<HTMLInputElement>) => {
     let input = evt.target as HTMLInputElement;
-    input.value ? setState({...state, buttonDisabled: false, inputValue: input.value}): setState({...state, buttonDisabled: true, inputValue: input.value});
+    input.value
+      ? updateState({ buttonDisabled: false, inputValue: input.value })
+      : updateState({ buttonDisabled: true, inputValue: input.value });
   };
 
   const buttonHandler = () => {
     const letters:ILetter[] = state.inputValue.split('').map(letter => {
-      return {letter, key: nanoid(10), state: circleColor}
+      return {letter, key: nanoid(10), state: ElementStates.Default}
     });
-    getReverseString(letters);
-    setState({...state, inputValue: '', visibleString: true, string: letters});
+    setTimeout(() => {
+      updateState({ string: letters })
+        getReverseString(letters);
+      }, 500);
   };
-
 
   return (
     <SolutionLayout title="Строка" >
@@ -64,12 +79,11 @@ export const StringComponent: React.FC = () => {
             disabled={state.buttonDisabled}
             linkedList={"small"}
             onClick={buttonHandler}
-
           />
         </div>
         <ul className={styles.list}>
-          {state.visibleString && state.string &&
-            state.string.map((letter:any) => <Circle letter={letter.letter} key={letter.key} state={circleColor}/>)
+          {state.string &&
+            state.string.map((letter) => <Circle letter={letter.letter} key={letter.key} state={letter.state}/>)
           }
         </ul>
       </div>

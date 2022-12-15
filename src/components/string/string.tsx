@@ -7,18 +7,24 @@ import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
 // стили
 import styles from './string.module.css';
-import {outputString, sort} from "../../utils/utils";
+import {ElementStates} from "../../types/element-states";
+import {Circle} from "../ui/circle/circle";
 import {getReverseString} from "../../utils/sorting";
 
-interface IState {
-  buttonLoader: boolean,
-  buttonDisabled: boolean,
-  inputValue: string,
-  string: null | [] | JSX.Element[],
-  visibleString: boolean
+export interface IState {
+  buttonLoader: boolean;
+  buttonDisabled: boolean;
+  inputValue: string;
+  string: ILetter[] | null;
+  visibleString: boolean;
+}
+
+export interface ILetter {
+  letter: string;
+  key: string;
+  state: ElementStates;
 }
 export const StringComponent: React.FC = () => {
-  const objects = Array.from(document.querySelectorAll('.letter'));
   const [state, setState] = useState<IState>({
     buttonLoader: false,
     buttonDisabled: true,
@@ -27,26 +33,20 @@ export const StringComponent: React.FC = () => {
     visibleString: false,
   });
   const [animations, setAnimations] = useState();
-
+  const [circleColor, setCircleColor] = useState(ElementStates.Default);
   const inputHandler = (evt: React.FormEvent<HTMLInputElement>) => {
-    console.log('inputHandler');
     let input = evt.target as HTMLInputElement;
     input.value ? setState({...state, buttonDisabled: false, inputValue: input.value}): setState({...state, buttonDisabled: true, inputValue: input.value});
   };
 
   const buttonHandler = () => {
-    console.log('buttonHandler');
-    const letters = state.inputValue.split('').map(letter => {
-      return {letter, key: nanoid(10)}
+    const letters:ILetter[] = state.inputValue.split('').map(letter => {
+      return {letter, key: nanoid(10), state: circleColor}
     });
-    const str = outputString(letters);
-    setTimeout(() => {
-      console.log(objects);
-      sort('revert', letters, setAnimations, objects);
-      // getReverseString(letters)
-    }, 500);
-    setState({...state, inputValue: '', visibleString: true, string: str});
+    getReverseString(letters);
+    setState({...state, inputValue: '', visibleString: true, string: letters});
   };
+
 
   return (
     <SolutionLayout title="Строка" >
@@ -56,7 +56,6 @@ export const StringComponent: React.FC = () => {
             maxLength={11}
             extraClass={styles.input}
             onChange={inputHandler}
-            value={state.inputValue}
             type={"text"} isLimitText
           />
           <Button
@@ -69,7 +68,9 @@ export const StringComponent: React.FC = () => {
           />
         </div>
         <ul className={styles.list}>
-          {state.visibleString && state.string}
+          {state.visibleString && state.string &&
+            state.string.map((letter:any) => <Circle letter={letter.letter} key={letter.key} state={circleColor}/>)
+          }
         </ul>
       </div>
     </SolutionLayout>

@@ -11,6 +11,7 @@ interface CircleProps {
   tailType?: "string" | "element";
   extraClass?: string;
   isSmall?: boolean;
+  ref?: React.MutableRefObject<undefined>;
 }
 
 export const Circle: React.FC<CircleProps> = ({
@@ -21,9 +22,10 @@ export const Circle: React.FC<CircleProps> = ({
   tail,
   extraClass = "",
   isSmall,
+  ref,
 }) => {
   return (
-    <div className={`${styles.content} ${extraClass}`}>
+    <li className={`${styles.content} ${extraClass}`}>
       <div
         className={`text text_type_input text_color_input mb-4 ${
           styles.absolute
@@ -58,6 +60,6 @@ export const Circle: React.FC<CircleProps> = ({
       >
         {tail}
       </div>
-    </div>
+    </li>
   );
 };

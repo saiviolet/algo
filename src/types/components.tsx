@@ -6,9 +6,17 @@ export interface ILetter {
   state: ElementStates;
 }
 
-export interface IState {
+export interface IStateString {
   buttonLoader: boolean;
   buttonDisabled: boolean;
   inputValue: string;
   string: ILetter[] | null;
+}
+
+export interface IStateFibonacci {
+  buttonLoader: boolean;
+  buttonDisabled: boolean;
+  inputValue: string;
+  number: number | null;
+  array: number[];
 }

@@ -10,20 +10,20 @@ import {Circle} from "../ui/circle/circle";
 import {swap, wait} from "../../utils/utils";
 // типы
 import {ElementStates} from "../../types/element-states";
-import {ILetter, IState} from "../../types/components";
+import {ILetter, IStateString} from "../../types/components";
 // стили
 import styles from './string.module.css';
 
 export const StringComponent: React.FC = () => {
 
-  const initialState:IState = {
+  const initialState:IStateString = {
     buttonLoader: false,
     buttonDisabled: true,
     inputValue: '',
     string: null,
   };
 
-  const [state, updateState] = useReducer<(state: IState, updates: any) => IState>(
+  const [state, updateState] = useReducer<(state: IStateString, updates: any) => IStateString>(
     (state, updates) => ({ ...state, ...updates }),
     initialState
   );
@@ -52,7 +52,6 @@ export const StringComponent: React.FC = () => {
       ? updateState({ buttonDisabled: false, inputValue: input.value })
       : updateState({ buttonDisabled: true, inputValue: input.value });
   };
-
   const buttonHandler = () => {
     const letters:ILetter[] = state.inputValue.split('').map(letter => {
       return {letter, key: nanoid(10), state: ElementStates.Default}

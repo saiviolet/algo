@@ -20,3 +20,5 @@ export interface IStateFibonacci {
   number: number | null;
   array: number[];
 }
+
+export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;

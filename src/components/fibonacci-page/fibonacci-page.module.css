@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
+  gap: 48px;
   min-height: 286px;
   max-width: 1040px;
   margin: 0 auto;
@@ -27,8 +28,9 @@
 .list {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 48px 16px;
   margin: 0 auto;
   padding: 0;
   list-style-type: none;

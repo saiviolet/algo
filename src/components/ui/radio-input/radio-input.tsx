@@ -15,7 +15,7 @@ export const RadioInput: React.FC<RadioProps> = ({
   const id = nanoid();
 
   return (
-    <div className={`${styles.content} ${extraClass}`}>
+    <div className={`${extraClass}`}>
       <input className={styles.input} type="radio" id={id} {...rest} />
       <label className={`text text_type_button ${styles.label}`} htmlFor={id}>
         {label}

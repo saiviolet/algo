@@ -21,4 +21,24 @@ export interface IStateFibonacci {
   array: number[];
 }
 
+export interface IStateSorting {
+  inputValue: string;
+  buttonLoaders: {
+    ascendingBtn: boolean,
+    descendingBtn: boolean,
+    newArrayBtn: boolean,
+  };
+  buttonBlocks: {
+    ascendingBtn: boolean,
+    descendingBtn: boolean,
+    newArrayBtn: boolean,
+  };
+  radioInput: string;
+  array: number[];
+}
+
+export interface IChart {
+  array: number[];
+}
+
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;

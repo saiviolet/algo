@@ -1,17 +1,18 @@
 import React, {useEffect, useReducer} from "react";
 // компоненты
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
+import {IStateFibonacci, TFibonacci} from "../../types/components";
 // ui
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
+import {Circle} from "../ui/circle/circle";
 //стили
 import styles from "./fibonacci-page.module.css";
-import {IStateFibonacci, TFibonacci} from "../../types/components";
-import {Circle} from "../ui/circle/circle";
-import {ElementStates} from "../../types/element-states";
+// функции
 import {wait} from "../../utils/utils";
 
 const fibonacci: TFibonacci = async (n, updateState) => {
+  updateState({ buttonLoader: true })
   let a = 1;
   let b = 1;
   let array = [];
@@ -35,6 +36,7 @@ const fibonacci: TFibonacci = async (n, updateState) => {
       await wait(500);
     }
   }
+  updateState({ buttonLoader: false });
 }
 
 export const FibonacciPage: React.FC = () => {
@@ -105,7 +107,7 @@ export const FibonacciPage: React.FC = () => {
           />
         </div>
         <ul className={styles.list}>
-          { state.number && state.array.map((number, index) => <Circle letter={String(number)} index={index} />)
+          { state.number && state.array.map((number, index) => <Circle letter={String(number)} index={index} key={`${String(number)}-${index}`}/>)
           }
         </ul>
       </div>

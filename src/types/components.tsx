@@ -52,3 +52,4 @@ export interface IArrayColumns {
 
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;
 export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
+export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;

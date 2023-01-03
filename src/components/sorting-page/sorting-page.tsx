@@ -4,7 +4,7 @@ import {RadioInput} from "../ui/radio-input/radio-input";
 import {Button} from "../ui/button/button";
 import React, {useEffect, useReducer} from "react";
 import {Direction} from "../../types/direction";
-import {IStateSorting, TBubbleSort, IArrayColumns} from "../../types/components";
+import {IStateSorting, TBubbleSort, IArrayColumns, TSelectSort} from "../../types/components";
 import {getRandomArray} from "../../utils/math";
 import {Column} from "../ui/column/column";
 import {swapColumns, wait} from "../../utils/utils";
@@ -13,10 +13,17 @@ import {ElementStates} from "../../types/element-states";
 
 export const SortingPage: React.FC = () => {
 
-  const selectSort = () => {
-    console.log('select sort');
+  const selectSort:TSelectSort = (array, type) => {
+    const n = array.length;
+    for (let i = 0; i < n - 1; i++) {
+      let min = i;
+      for (let j = i + 1; j < n; j++) {
+        if (array[min].number > array[j].number) min = j;
+      }
+      swapColumns(array, i, min);
+    }
+    console.log(array);
   }
-
   const bubbleSort:TBubbleSort = async (array, type) => {
     const n = array.length;
     for(let i = 0; i < n - 1; i++) {
@@ -83,12 +90,12 @@ export const SortingPage: React.FC = () => {
 
   const ascendingButtonHandler = () => {
     updateState({buttonLoaders: {...state.buttonLoaders, ascendingBtn: true}, buttonBlocks: {...state.buttonBlocks, descendingBtn: true, newArrayBtn: true, bubbleRadioInput: true, selectRadioInput:  true} });
-    state.radioInput === 'bubble' ? bubbleSort(state.array, 'ascending') : selectSort();
+    state.radioInput === 'bubble' ? bubbleSort(state.array, 'ascending') : selectSort(state.array, 'ascending');
   };
 
   const descendingButtonHandler = () => {
     updateState({buttonLoaders: {...state.buttonLoaders, ascendingBtn: true}, buttonBlocks: {...state.buttonBlocks, descendingBtn: true, newArrayBtn: true, bubbleRadioInput: true, selectRadioInput:  true} });
-    state.radioInput === 'bubble' ? bubbleSort(state.array, 'descending') : selectSort();
+    state.radioInput === 'bubble' ? bubbleSort(state.array, 'descending') : selectSort(state.array, 'descending');
   };
 
   const newArrayButtonHandler = () => {

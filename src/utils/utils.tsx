@@ -1,4 +1,7 @@
+import {IArrayColumns} from "../types/components";
+
 type Tswap = (array: any[], i: number, min: number) => void;
+type TSwapColumns = (array: IArrayColumns[], i: number, min: number) => void;
 type TCompare = (a: string, b: string) => number;
 // ф-ия для правильно вывода окончания в подсказке к инпуту
 export const declination = (count: number | undefined) => {
@@ -24,6 +27,13 @@ export const swap:Tswap = (array, i, min) => {
   const copy = array[i];
   array[i] = array[min];
   array[min] = copy;
+};
+
+export const swapColumns:TSwapColumns = (array, i, min) => {
+  //копия значения по индексу  i
+  const copy = array[i].number;
+  array[i].number = array[min].number;
+  array[min].number = copy;
 };
 
 // ф-ия для сравнения

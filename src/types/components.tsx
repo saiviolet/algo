@@ -1,4 +1,5 @@
 import {ElementStates} from "./element-states";
+import {nanoid} from "nanoid";
 
 export interface ILetter {
   letter: string;
@@ -32,13 +33,22 @@ export interface IStateSorting {
     ascendingBtn: boolean,
     descendingBtn: boolean,
     newArrayBtn: boolean,
+    bubbleRadioInput: boolean,
+    selectRadioInput: boolean,
   };
   radioInput: string;
-  array: number[];
+  array: IArrayColumns[];
 }
 
 export interface IChart {
   array: number[];
 }
 
+export interface IArrayColumns {
+  number: number;
+  key: string;
+  state: ElementStates
+}
+
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;
+export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;

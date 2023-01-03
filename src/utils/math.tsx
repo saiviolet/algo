@@ -12,4 +12,5 @@ export const getRandomArray = () => {
     array.push(getRandom(0, 100));
   };
   return array;
-}
+};
+

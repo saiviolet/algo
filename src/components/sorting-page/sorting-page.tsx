@@ -1,28 +1,46 @@
+import React, {useEffect, useReducer} from "react";
+// компоненты
 import {SolutionLayout} from "../ui/solution-layout/solution-layout";
+// стили
 import styles from './sorting-page.module.css';
+// юай
 import {RadioInput} from "../ui/radio-input/radio-input";
 import {Button} from "../ui/button/button";
-import React, {useEffect, useReducer} from "react";
+import {Column} from "../ui/column/column";
+// типы
 import {Direction} from "../../types/direction";
 import {IStateSorting, TBubbleSort, IArrayColumns, TSelectSort} from "../../types/components";
+import {ElementStates} from "../../types/element-states";
+// вспомогательные функции
 import {getRandomArray} from "../../utils/math";
-import {Column} from "../ui/column/column";
 import {swapColumns, wait} from "../../utils/utils";
 import {nanoid} from "nanoid";
-import {ElementStates} from "../../types/element-states";
+
 
 export const SortingPage: React.FC = () => {
-
-  const selectSort:TSelectSort = (array, type) => {
+  const selectSort:TSelectSort = async (array, type) => {
     const n = array.length;
     for (let i = 0; i < n - 1; i++) {
       let min = i;
+      array[i].state = ElementStates.Changing;
+      updateState({ array: array });
       for (let j = i + 1; j < n; j++) {
-        if (array[min].number > array[j].number) min = j;
+        if (type === 'ascending') {
+          if (array[min].number > array[j].number) min = j;
+        };
+        if (type === 'descending') {
+          if (array[min].number < array[j].number) min = j;
+        }
+        array[j].state = ElementStates.Changing;
+        updateState({ array: array });
+        await wait(500);
+        array[j].state = ElementStates.Default;
       }
       swapColumns(array, i, min);
+      array[i].state = ElementStates.Modified;
     }
-    console.log(array);
+    array[n-1].state = ElementStates.Modified;
+    updateState({buttonLoaders: {...state.buttonLoaders, ascendingBtn: false}, buttonBlocks: {...state.buttonBlocks, descendingBtn: false, newArrayBtn: false, bubbleRadioInput: false}, array: array });
   }
   const bubbleSort:TBubbleSort = async (array, type) => {
     const n = array.length;
@@ -50,7 +68,6 @@ export const SortingPage: React.FC = () => {
     }
     array[0].state = ElementStates.Modified;
     updateState({buttonLoaders: {...state.buttonLoaders, ascendingBtn: false}, buttonBlocks: {...state.buttonBlocks, descendingBtn: false, newArrayBtn: false, bubbleRadioInput: false}, array: array });
-
   }
 
   const initialState:IStateSorting = {
@@ -86,7 +103,7 @@ export const SortingPage: React.FC = () => {
     let columns: IArrayColumns[] = [];
     array.forEach(arr => columns.push({number: arr, key: nanoid(10), state: ElementStates.Default}));
     return columns;
-  }
+  };
 
   const ascendingButtonHandler = () => {
     updateState({buttonLoaders: {...state.buttonLoaders, ascendingBtn: true}, buttonBlocks: {...state.buttonBlocks, descendingBtn: true, newArrayBtn: true, bubbleRadioInput: true, selectRadioInput:  true} });

@@ -49,6 +49,35 @@ export interface IArrayColumns {
   key: string;
   state: ElementStates
 }
+export interface IArrayCircles {
+  number: string;
+  key: string;
+  state: ElementStates;
+  top: boolean;
+}
+
+
+export interface IStackPage {
+  inputValue: string;
+  buttonLoaders: {
+    addBtn: boolean,
+    deleteBtn: boolean,
+    clearBtn: boolean,
+  };
+  buttonBlocks: {
+    addBtn: boolean,
+    deleteBtn: boolean,
+    clearBtn: boolean,
+  };
+  array: IArrayCircles[],
+}
+
+export interface IStack<T> {
+  push: (item: T) => void;
+  pop: () => void;
+  clear: () => void;
+  getArray: () => T[];
+}
 
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;
 export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;

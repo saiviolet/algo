@@ -53,8 +53,8 @@ export const circles:TQueue = (number) => {
       state: ElementStates.Default,
       index: i,
       letter: undefined,
-      head: undefined,
-      tail: undefined,
+      head: '',
+      tail: '',
     });
   }
   return array;

@@ -30,18 +30,17 @@ export class Queue<T> implements IQueue<T> {
     }
   };
 
-  dequeue = (): T| undefined  => {
+  dequeue = (): void  => {
     if(this.size < 0) {
       throw new Error('Удалять нечего ');
     }
     this.size--;
     // this.container.shift();
-    if (this.tail === this.head)
-      return undefined;
+    if (this.tail === this.head) this.tail = 0;
     delete this.container[this.head++];
     if(this.size < 0) {
       this.head = this.head-1;
-      this.tail = -1;
+      this.tail = this.tail-1;
     }
   };
 

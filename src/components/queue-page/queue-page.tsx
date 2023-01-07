@@ -54,8 +54,8 @@ export const QueuePage: React.FC = () => {
     updateState({inputValue: '',
       circles: state.circles.map((circle, index) => {
         circle.letter = queueArr[index];
-        circle.tail = undefined;
-        circle.head = undefined;
+        circle.tail = '';
+        circle.head = '';
         circle.state = ElementStates.Default;
         if(index === queueArrLength) {
           circle.state = ElementStates.Changing;
@@ -63,19 +63,23 @@ export const QueuePage: React.FC = () => {
         if(index === queueTail) circle.tail = 'tail';
         if(index === queueHead) circle.head = 'head';
         return circle;
-        })
+        }),
+      buttonBlocks: {...state.buttonBlocks, addBtn: false, deleteBtn: true, clearBtn: true},
+      buttonLoaders: {...state.buttonLoaders, addBtn: true},
     });
-    await wait(500);
+    await wait(1000);
     updateState({inputValue: '',
       circles: state.circles.map((circle, index) => {
         circle.letter = queueArr[index];
-        circle.tail = undefined;
-        circle.head = undefined;
+        circle.tail = '';
+        circle.head = '';
         circle.state = ElementStates.Default;
         if(index === queueTail) circle.tail = 'tail';
         if(index === queueHead) circle.head = 'head';
         return circle;
-      })
+      }),
+      buttonBlocks: {...state.buttonBlocks, addBtn: true, deleteBtn: false, clearBtn: false},
+      buttonLoaders: {...state.buttonLoaders, addBtn: false},
     });
   };
 
@@ -92,8 +96,8 @@ export const QueuePage: React.FC = () => {
       updateState({inputValue: '',
         circles: state.circles.map((circle, index) => {
           circle.letter = queueArr[index];
-          circle.tail = undefined;
-          circle.head = undefined;
+          circle.tail = '';
+          circle.head = '';
           circle.state = ElementStates.Default;
           if(index === queueHead) {
             circle.state = ElementStates.Changing;
@@ -101,24 +105,32 @@ export const QueuePage: React.FC = () => {
           };
           if(index === queueTail) circle.tail = 'tail';
           return circle;
-        })
+        }),
+        buttonBlocks: {...state.buttonBlocks, addBtn: true, deleteBtn: false, clearBtn: true},
+        buttonLoaders: {...state.buttonLoaders, deleteBtn: true},
       });
-      await wait(500);
+      await wait(1000);
       updateState({inputValue: '',
         circles: state.circles.map((circle, index) => {
           circle.letter = queueArr[index];
-          circle.tail = undefined;
-          circle.head = undefined;
+          circle.tail = '';
+          circle.head = '';
           circle.state = ElementStates.Default;
           if(index === queueTail) circle.tail = 'tail';
           if(index === queueHead) circle.head = 'head';
           return circle;
-        })
+        }),
+        buttonBlocks: {...state.buttonBlocks, addBtn: false, deleteBtn: false, clearBtn: false},
+        buttonLoaders: {...state.buttonLoaders, deleteBtn: false},
       });
   };
 
   const buttonClearHandler = () => {
-
+    queue.clear();
+    const queueArr = queue.getArray();
+    updateState({inputValue: '',
+      circles: initialCircles,
+    });
   };
   return (
     <SolutionLayout title="Очередь">
@@ -161,7 +173,7 @@ export const QueuePage: React.FC = () => {
             key={circle.key}
             index={circle.index}
             head={circle.head}
-            tail={circle.tail}
+            tail={queue.getTail() > queue.getHead() ? circle.tail: ''}
             letter={circle.letter}/>
           )}
         </ul>

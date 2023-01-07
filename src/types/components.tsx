@@ -63,8 +63,8 @@ export interface IQueueCircles {
   state: ElementStates;
   index: number;
   letter: undefined | string;
-  head: undefined | string;
-  tail: undefined | string;
+  head: string;
+  tail: string;
 }
 
 export interface IStackPage {

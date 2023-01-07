@@ -50,12 +50,22 @@ export interface IArrayColumns {
   state: ElementStates
 }
 export interface IArrayCircles {
-  number: string;
+  number?: string;
   key: string;
   state: ElementStates;
-  top: boolean;
+  top?: boolean;
+  index?: number;
+  letter?: undefined | string;
 }
 
+export interface IQueueCircles {
+  key: string;
+  state: ElementStates;
+  index: number;
+  letter: undefined | string;
+  head: undefined | string;
+  tail: undefined | string;
+}
 
 export interface IStackPage {
   inputValue: string;
@@ -72,11 +82,35 @@ export interface IStackPage {
   array: IArrayCircles[],
 }
 
+export interface IQueuePage {
+  inputValue: string;
+  buttonLoaders: {
+    addBtn: boolean,
+    deleteBtn: boolean,
+    clearBtn: boolean,
+  };
+  buttonBlocks: {
+    addBtn: boolean,
+    deleteBtn: boolean,
+    clearBtn: boolean,
+  };
+  circles: IQueueCircles[],
+}
+
 export interface IStack<T> {
   push: (item: T) => void;
   pop: () => void;
   clear: () => void;
   getArray: () => T[];
+}
+
+export interface IQueue<T> {
+  enqueue: (item: T) => void;
+  dequeue: () => void;
+  clear: () => void;
+  getArray: () => T[];
+  getTail: () => number;
+  getHead: () => number;
 }
 
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;

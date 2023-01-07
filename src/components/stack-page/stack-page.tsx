@@ -44,8 +44,8 @@ export const StackPage: React.FC = () => {
     const array = stack.getArray();
     const arrayLength = array.length-1;
     updateState({inputValue: '', array: array.map((number, index) => {
-      if(index === arrayLength) return {number, key: nanoid(10), state: ElementStates.Changing, top: true};
-      return {number, key: nanoid(10), state: ElementStates.Default, top: false}
+        if(index === arrayLength) return {number, key: nanoid(10), state: ElementStates.Changing, top: true};
+        return {number, key: nanoid(10), state: ElementStates.Default, top: false}
       })});
     await wait(500);
     updateState({inputValue: '', array: array.map((number, index) => {
@@ -74,7 +74,6 @@ export const StackPage: React.FC = () => {
     const array = stack.getArray();
     updateState({array});
   };
-  // @ts-ignore
   return (
     <SolutionLayout title="Стек">
       <div className={styles.mainWrapper}>
@@ -111,7 +110,7 @@ export const StackPage: React.FC = () => {
           />
         </div>
         <ul className={styles.circles}>
-          {state.array && state.array.map(circle => <Circle state={circle.state} key={circle.key} letter={circle.number} head={circle.top ? 'top': undefined}/>)}
+          {state.array && state.array.map(circle => <Circle state={circle.state} key={circle.key} letter={circle.number} />)}
         </ul>
       </div>
     </SolutionLayout>

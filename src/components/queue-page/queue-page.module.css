@@ -1,0 +1,32 @@
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 300px;
+}
+
+.panel {
+  max-width: 829px;
+  display: flex;
+}
+
+.circles {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-width: 829px;
+  flex-wrap: wrap;
+}
+
+.wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: center;
+  margin-right: 80px;
+}

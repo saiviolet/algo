@@ -111,6 +111,7 @@ export interface IQueue<T> {
   getArray: () => T[];
   getTail: () => number;
   getHead: () => number;
+  getSize: () => number;
 }
 
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;

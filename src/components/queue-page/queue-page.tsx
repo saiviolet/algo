@@ -47,6 +47,10 @@ export const QueuePage: React.FC = () => {
     const queueTail = queue.getTail() - 1;
     const queueHead = queue.getHead();
     const queueArrLength = queueArr.length - 1;
+    const queueSize = queue.getSize();
+    console.log('queueTail '+queueTail);
+    console.log('queueHead '+queueHead);
+    console.log('queueSize '+queueSize);
     updateState({inputValue: '',
       circles: state.circles.map((circle, index) => {
         circle.letter = queueArr[index];
@@ -80,33 +84,37 @@ export const QueuePage: React.FC = () => {
     const queueArr = queue.getArray();
     const queueTail = queue.getTail() - 1;
     const queueHead = queue.getHead();
+    const queueSize = queue.getSize();
+    console.log('queueTail '+queueTail);
+    console.log('queueHead '+queueHead);
+    console.log('queueSize '+queueSize);
     const queueArrLength = queueArr.length - 1;
-    updateState({inputValue: '',
-      circles: state.circles.map((circle, index) => {
-        circle.letter = queueArr[index];
-        circle.tail = undefined;
-        circle.head = undefined;
-        circle.state = ElementStates.Default;
-        if(index === queueHead) {
-          circle.state = ElementStates.Changing;
-          circle.head = 'head';
-        };
-        if(index === queueTail) circle.tail = 'tail';
-        return circle;
-      })
-    });
-    await wait(500);
-    updateState({inputValue: '',
-      circles: state.circles.map((circle, index) => {
-        circle.letter = queueArr[index];
-        circle.tail = undefined;
-        circle.head = undefined;
-        circle.state = ElementStates.Default;
-        if(index === queueTail) circle.tail = 'tail';
-        if(index === queueHead) circle.head = 'head';
-        return circle;
-      })
-    });
+      updateState({inputValue: '',
+        circles: state.circles.map((circle, index) => {
+          circle.letter = queueArr[index];
+          circle.tail = undefined;
+          circle.head = undefined;
+          circle.state = ElementStates.Default;
+          if(index === queueHead) {
+            circle.state = ElementStates.Changing;
+            circle.head = 'head';
+          };
+          if(index === queueTail) circle.tail = 'tail';
+          return circle;
+        })
+      });
+      await wait(500);
+      updateState({inputValue: '',
+        circles: state.circles.map((circle, index) => {
+          circle.letter = queueArr[index];
+          circle.tail = undefined;
+          circle.head = undefined;
+          circle.state = ElementStates.Default;
+          if(index === queueTail) circle.tail = 'tail';
+          if(index === queueHead) circle.head = 'head';
+          return circle;
+        })
+      });
   };
 
   const buttonClearHandler = () => {

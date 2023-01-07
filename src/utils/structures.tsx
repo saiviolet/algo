@@ -21,15 +21,28 @@ export class Queue<T> implements IQueue<T> {
   private container: T[] = [];
   private head = 0;
   private tail = 0;
+  private size = -1;
   enqueue = (item: T): void => {
     this.container[this.tail++] = item;
+    this.size++;
+    if(this.size > 6 || this.head >=6) {
+      throw new Error('Мест в очереди больше нет');
+    }
   };
 
-  dequeue = (): void => {
+  dequeue = (): T| undefined  => {
+    if(this.size < 0) {
+      throw new Error('Удалять нечего ');
+    }
+    this.size--;
     // this.container.shift();
     if (this.tail === this.head)
-      return undefined
+      return undefined;
     delete this.container[this.head++];
+    if(this.size < 0) {
+      this.head = this.head-1;
+      this.tail = -1;
+    }
   };
 
   clear = (): void => {
@@ -39,5 +52,6 @@ export class Queue<T> implements IQueue<T> {
   getArray = () => this.container;
   getTail = () => this.tail;
   getHead = () => this.head;
+  getSize = () => this.size;
 
 }

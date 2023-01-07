@@ -22,11 +22,14 @@ export class Queue<T> implements IQueue<T> {
   private head = 0;
   private tail = 0;
   enqueue = (item: T): void => {
-    this.container.push(item);
+    this.container[this.tail++] = item;
   };
 
   dequeue = (): void => {
-    this.container.shift();
+    // this.container.shift();
+    if (this.tail === this.head)
+      return undefined
+    delete this.container[this.head++];
   };
 
   clear = (): void => {

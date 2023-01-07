@@ -44,44 +44,69 @@ export const QueuePage: React.FC = () => {
   const buttonAddHandler = async () => {
     queue.enqueue(state.inputValue);
     const queueArr = queue.getArray();
+    const queueTail = queue.getTail() - 1;
+    const queueHead = queue.getHead();
     const queueArrLength = queueArr.length - 1;
-    console.log(queueArr);
-
-    // updateState({inputValue: '',
-    //   circles: state.circles.map((circle, index) => {
-    //     circle.letter = queueArr[index];
-    //     circle.tail = undefined;
-    //     circle.head = undefined;
-    //     circle.state = ElementStates.Default;
-    //     if(index === queueArrLength) {
-    //       circle.tail = 'tail';
-    //       circle.state = ElementStates.Changing;
-    //     };
-    //     if(index === 0) circle.head = 'head';
-    //     return circle;
-    //     })
-    // });
-    // await wait(500);
-    // updateState({inputValue: '',
-    //   circles: state.circles.map((circle, index) => {
-    //     circle.letter = queueArr[index];
-    //     circle.tail = undefined;
-    //     circle.head = undefined;
-    //     circle.state = ElementStates.Default;
-    //     if(index === queueArrLength) {
-    //       circle.tail = 'tail';
-    //     };
-    //     if(index === 0) circle.head = 'head';
-    //     return circle;
-    //   })
-    // });
+    updateState({inputValue: '',
+      circles: state.circles.map((circle, index) => {
+        circle.letter = queueArr[index];
+        circle.tail = undefined;
+        circle.head = undefined;
+        circle.state = ElementStates.Default;
+        if(index === queueArrLength) {
+          circle.state = ElementStates.Changing;
+        };
+        if(index === queueTail) circle.tail = 'tail';
+        if(index === queueHead) circle.head = 'head';
+        return circle;
+        })
+    });
+    await wait(500);
+    updateState({inputValue: '',
+      circles: state.circles.map((circle, index) => {
+        circle.letter = queueArr[index];
+        circle.tail = undefined;
+        circle.head = undefined;
+        circle.state = ElementStates.Default;
+        if(index === queueTail) circle.tail = 'tail';
+        if(index === queueHead) circle.head = 'head';
+        return circle;
+      })
+    });
   };
 
   const buttonDeleteHandler = async() => {
     queue.dequeue();
     const queueArr = queue.getArray();
+    const queueTail = queue.getTail() - 1;
+    const queueHead = queue.getHead();
     const queueArrLength = queueArr.length - 1;
-    console.log(queueArr);
+    updateState({inputValue: '',
+      circles: state.circles.map((circle, index) => {
+        circle.letter = queueArr[index];
+        circle.tail = undefined;
+        circle.head = undefined;
+        circle.state = ElementStates.Default;
+        if(index === queueHead) {
+          circle.state = ElementStates.Changing;
+          circle.head = 'head';
+        };
+        if(index === queueTail) circle.tail = 'tail';
+        return circle;
+      })
+    });
+    await wait(500);
+    updateState({inputValue: '',
+      circles: state.circles.map((circle, index) => {
+        circle.letter = queueArr[index];
+        circle.tail = undefined;
+        circle.head = undefined;
+        circle.state = ElementStates.Default;
+        if(index === queueTail) circle.tail = 'tail';
+        if(index === queueHead) circle.head = 'head';
+        return circle;
+      })
+    });
   };
 
   const buttonClearHandler = () => {

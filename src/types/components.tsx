@@ -1,5 +1,7 @@
 import {ElementStates} from "./element-states";
 import {nanoid} from "nanoid";
+import {DLList, DLListNode} from "../utils/structures";
+
 
 export interface ILetter {
   letter: string;
@@ -114,6 +116,20 @@ export interface IQueue<T> {
   getSize: () => number;
 }
 
-export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;
-export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
-export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
+export interface INode<T> {
+  data: T;
+  next: DLListNode<T>| null;
+  prev: DLListNode<T>| null;
+}
+
+export interface INodeDLList<T> {
+  head: DLListNode<T> | null;
+  tail: DLListNode<T> | null;
+  addInHead(data: T): DLList<T>;
+  addInTail(data: T): DLList<T>;
+  addByIndex(data: T): DLList<T>;
+  deleteFromHead(): DLList<T> | null;
+  deleteFromTail(): DLList<T> | null;
+  deleteByIndex(): DLList<T> | null;
+  returnArray: () => DLList<T>[];
+}

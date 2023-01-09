@@ -25,7 +25,7 @@ export const Circle: React.FC<CircleProps> = ({
   ref,
 }) => {
   return (
-    <li className={`${styles.content} ${extraClass}`}>
+    <div className={`${styles.content} ${extraClass}`}>
       <div
         className={`text text_type_input text_color_input mb-4 ${
           styles.absolute
@@ -60,6 +60,6 @@ export const Circle: React.FC<CircleProps> = ({
       >
         {tail}
       </div>
-    </li>
+    </div>
   );
 };

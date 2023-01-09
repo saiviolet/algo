@@ -1,6 +1,6 @@
 import {ElementStates} from "./element-states";
 import {nanoid} from "nanoid";
-import {DLList, DLListNode} from "../utils/structures";
+import {LinkedList, LListNode} from "../utils/structures";
 
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;
 export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
@@ -121,7 +121,7 @@ export interface IListPage {
     deleteFromTail: boolean,
     deleteByIndex: boolean,
   },
-  list: any[],
+  list: IQueueCircles[],
 };
 
 export interface IStack<T> {
@@ -143,18 +143,10 @@ export interface IQueue<T> {
 
 export interface INode<T> {
   data: T;
-  next: DLListNode<T>| null;
-  prev: DLListNode<T>| null;
+  next?: LListNode<T>| null;
 }
 
 export interface INodeDLList<T> {
-  head: DLListNode<T> | null;
-  tail: DLListNode<T> | null;
-  addInHead(data: T): DLList<T>;
-  addInTail(data: T): DLList<T>;
-  // addByIndex(data: T, index: T): DLList<T>;
-  // deleteFromHead(): DLList<T> | null;
-  // deleteFromTail(): DLList<T> | null;
-  // deleteByIndex(): DLList<T> | null;
-  // returnArray: () => DLList<T>[];
+  head: LListNode<T> | null;
+  tail: LListNode<T> | null;
 }

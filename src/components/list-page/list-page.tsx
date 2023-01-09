@@ -1,14 +1,18 @@
-import React, {useMemo, useReducer} from "react";
-import { SolutionLayout } from "../ui/solution-layout/solution-layout";
+import React, {ReactElement, useEffect, useMemo, useReducer} from "react";
+import {SolutionLayout} from "../ui/solution-layout/solution-layout";
 import styles from "./list-page.module.css";
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
-import {IListPage} from "../../types/components";
-import {Stack} from "../../utils/structures";
+import {IListPage, IQueueCircles} from "../../types/components";
+import {LinkedList} from "../../utils/structures";
+import {wait} from "../../utils/utils";
+import {Circle} from "../ui/circle/circle";
+import {nanoid} from "nanoid";
+import {ElementStates} from "../../types/element-states";
+import {ArrowIcon} from "../ui/icons/arrow-icon";
 
 export const ListPage: React.FC = () => {
-  const stack = useMemo(() => new Stack<string>(), []);
-
+  const linkedList = useMemo(() => new LinkedList<string>(), []);
   const initialState:IListPage = {
     inputValue: undefined,
     inputIndex: undefined,
@@ -36,44 +40,164 @@ export const ListPage: React.FC = () => {
     initialState
   );
 
+  useEffect(() => {
+    const hardcode = ['щука', 'в', 'реке', 'жила'];
+    hardcode.forEach(item => {
+      linkedList.addInTail(item);
+    });
+    const list = linkedList.toArray();
+    const insertArray = list!.map((item, index) => {
+      return {
+        key: nanoid(10),
+        state: ElementStates.Default,
+        letter: item.data,
+        head: index === 0 ? 'head' : undefined,
+        tail: index === list!.length - 1 ? 'tail' : undefined,
+        index: index,
+      }
+    });
+    updateState({list: insertArray});
+  },[]);
+
   const inputValueHandler = (evt: React.FormEvent<HTMLInputElement>) => {
     let input = evt.target as HTMLInputElement;
     input.value
       ? updateState({ buttonBlocks: {...state.buttonBlocks, addInHead: false, addInTail: false}, inputValue: input.value})
-      : updateState({ buttonBlocks: {...state.buttonBlocks, addInHead: true, addInTail: true}, inputValue: input.value})
+      : updateState({ buttonBlocks: {...state.buttonBlocks, addInHead: true, addInTail: true}, inputValue: input.value});
   };
 
   const inputIndexHandler = (evt: React.FormEvent<HTMLInputElement>) => {
     let input = evt.target as HTMLInputElement;
     (input.value && state.inputValue)
       ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false, deleteByIndex: false}, inputIndex: input.value})
-      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true}, inputIndex: input.value})
+      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true}, inputIndex: input.value});
   };
 
-  const buttonAddToHead = () => {
+  const buttonAddToHead = async() => {
+    if(state.inputValue) linkedList.addInHead(state.inputValue);
+    const list = linkedList.toArray();
+    let littleCircle: ReactElement;
+    if (list) littleCircle = <Circle
+      letter={list[0].data}
+      key={nanoid(10)}
+      state = {ElementStates.Changing}
+      isSmall={true}
+    />
+    const beforeInsertArray = state.list.map((item, index) => {
+      return {
+        key: nanoid(10),
+        state: ElementStates.Default,
+        letter: item.letter,
+        head: index === 0 ? littleCircle : '',
+        tail: undefined,
+        index: index,
+      }
+    });
+    const insertArray = list!.map((item, index) => {
+      return {
+        key: nanoid(10),
+        state: index === 0? ElementStates.Modified : ElementStates.Default,
+        letter: item.data,
+        head: index === 0 ? 'head' : undefined,
+        tail: undefined,
+        index: index,
+      }
+    });
+    const afterInsertArray = JSON.parse(JSON.stringify(insertArray));
+    afterInsertArray[0].state = ElementStates.Default;
 
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, addInHead: true},
+      buttonBlocks: {...state.buttonBlocks, addInTail: true, addByIndex: true, deleteFromHead: true, deleteFromTail: true, deleteByIndex: true},
+      inputValue: undefined,
+      list: beforeInsertArray,
+    });
+    await wait(1000);
+    updateState({list: insertArray});
+    await wait(1000);
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, addInHead: false},
+      buttonBlocks: {...state.buttonBlocks, addInTail: false, addByIndex: false, deleteFromHead: false, deleteFromTail: false, deleteByIndex: false},
+      list: afterInsertArray,
+    });
   };
 
-  const buttonAddToTail = () => {
-
+  const buttonAddToTail = async() => {
+    if(state.inputValue) linkedList.addInTail(state.inputValue);
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, addInTail: true},
+      buttonBlocks: {...state.buttonBlocks, addInHead: true, addByIndex: true, deleteFromHead: true, deleteFromTail: true, deleteByIndex: true},
+      inputValue: '',
+      list: linkedList.toArray(),
+    });
+    await wait(1000);
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, addInTail: false},
+      buttonBlocks: {...state.buttonBlocks, addInHead: false, addByIndex: false, deleteFromHead: false, deleteFromTail: false, deleteByIndex: false}
+    });
+    console.log(linkedList.toArray());
   };
 
-  const buttonAddByIndex = () => {
-
+  const buttonAddByIndex = async() => {
+    if(state.inputValue && state.inputIndex) linkedList.addByIndex(state.inputValue, Number(state.inputIndex));
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, addByIndex: true},
+      buttonBlocks: {...state.buttonBlocks, addInHead: true, addInTail: true, deleteFromHead: true, deleteFromTail: true, deleteByIndex: true},
+      inputValue: ''});
+    await wait(1000);
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, addByIndex: false},
+      buttonBlocks: {...state.buttonBlocks, addInHead: false, addInTail: false, deleteFromHead: false, deleteFromTail: false, deleteByIndex: false}
+    });
+    console.log(linkedList.toArray());
   };
 
-  const buttonDeleteFromHead = () => {
-
+  const buttonDeleteFromHead = async() => {
+    if(linkedList.toArray()!.length <= 0) throw new Error('Cписок пуст');
+    linkedList.deleteFromHead();
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, deleteFromHead: true},
+      buttonBlocks: {...state.buttonBlocks, addInHead: true, addInTail: true, addByIndex: true, deleteFromTail: true, deleteByIndex: true},
+      inputValue: ''});
+    await wait(1000);
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, deleteFromHead: false},
+      buttonBlocks: {...state.buttonBlocks, addInHead: false, addInTail: false, addByIndex: false, deleteFromTail: false, deleteByIndex: false}
+    });
+    console.log(linkedList.toArray());
   };
 
-  const buttonDeleteFromTail = () => {
-
+  const buttonDeleteFromTail = async() => {
+    if(linkedList.toArray()!.length <= 0) throw new Error('Cписок пуст');
+    linkedList.deleteFromTail();
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, deleteFromTail: true},
+      buttonBlocks: {...state.buttonBlocks, addInHead: true, addInTail: true, addByIndex: true, deleteFromHead: true, deleteByIndex: true},
+      inputValue: ''});
+    await wait(1000);
+    updateState({
+      buttonLoaders: {...state.buttonLoaders, deleteFromTail: false},
+      buttonBlocks: {...state.buttonBlocks, addInHead: false, addInTail: false, addByIndex: false, deleteFromHead: false, deleteByIndex: false}
+    });
+    console.log(linkedList.toArray());
   };
 
-  const buttonDeleteByIndex = () => {
-
+  const buttonDeleteByIndex = async() => {
+    if(!state.inputIndex) throw new Error('Не введен индекс для удаления или список пуст')
+    else {
+      if(state.inputIndex) linkedList.deleteByIndex(Number(state.inputIndex));
+      updateState({
+        buttonLoaders: {...state.buttonLoaders, deleteByIndex: true},
+        buttonBlocks: {...state.buttonBlocks, addInHead: true, addInTail: true, addByIndex: true, deleteFromHead: true, deleteFromTail: true},
+        inputValue: ''});
+      await wait(1000);
+      updateState({
+        buttonLoaders: {...state.buttonLoaders, deleteByIndex: false},
+        buttonBlocks: {...state.buttonBlocks, addInHead: false, addInTail: false, addByIndex: false, deleteFromHead: false, deleteFromTail: false}
+      });
+      console.log(linkedList.toArray());
+    }
   };
-
   return (
     <SolutionLayout title="Связный список">
       <div className={styles.mainWrapper}>
@@ -136,7 +260,19 @@ export const ListPage: React.FC = () => {
             onClick={buttonDeleteByIndex}
           />
         </div>
-        <ul className={styles.list}></ul>
+        <ul className={styles.list}>
+          {state.list && state.list.map((circle, index) => <React.Fragment key={circle.key}><Circle
+            letter={circle.letter}
+            key={circle.key}
+            state = {circle.state}
+            head={circle.head}
+            tail={circle.tail}
+            index={circle.index}
+          />
+            {index <= state.list.length-2 && <ArrowIcon />}
+            </React.Fragment>
+          ) }
+        </ul>
       </div>
     </SolutionLayout>
   );

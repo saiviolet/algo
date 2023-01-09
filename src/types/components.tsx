@@ -2,6 +2,9 @@ import {ElementStates} from "./element-states";
 import {nanoid} from "nanoid";
 import {DLList, DLListNode} from "../utils/structures";
 
+export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;
+export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
+export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
 
 export interface ILetter {
   letter: string;
@@ -99,6 +102,28 @@ export interface IQueuePage {
   circles: IQueueCircles[],
 }
 
+export interface IListPage {
+  inputValue: string | undefined,
+  inputIndex: string | undefined,
+  buttonLoaders: {
+    addInHead: boolean,
+    addInTail: boolean,
+    addByIndex: boolean,
+    deleteFromHead: boolean,
+    deleteFromTail: boolean,
+    deleteByIndex: boolean,
+  },
+  buttonBlocks: {
+    addInHead: boolean,
+    addInTail: boolean,
+    addByIndex: boolean,
+    deleteFromHead: boolean,
+    deleteFromTail: boolean,
+    deleteByIndex: boolean,
+  },
+  list: any[],
+};
+
 export interface IStack<T> {
   push: (item: T) => void;
   pop: () => void;
@@ -127,9 +152,9 @@ export interface INodeDLList<T> {
   tail: DLListNode<T> | null;
   addInHead(data: T): DLList<T>;
   addInTail(data: T): DLList<T>;
-  addByIndex(data: T): DLList<T>;
-  deleteFromHead(): DLList<T> | null;
-  deleteFromTail(): DLList<T> | null;
-  deleteByIndex(): DLList<T> | null;
-  returnArray: () => DLList<T>[];
+  // addByIndex(data: T, index: T): DLList<T>;
+  // deleteFromHead(): DLList<T> | null;
+  // deleteFromTail(): DLList<T> | null;
+  // deleteByIndex(): DLList<T> | null;
+  // returnArray: () => DLList<T>[];
 }

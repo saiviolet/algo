@@ -1,4 +1,4 @@
-import {IDLListNode, ILinkedList, INode, INodeDLList, IQueue, IStack, TData} from "../types/components";
+import {INode, INodeDLList, IQueue, IStack} from "../types/components";
 
 export class Stack<T> implements IStack<T> {
   private container: T[] = [];
@@ -66,8 +66,8 @@ export class DLListNode<T> implements INode<T>{
 export class DLList<T> implements INodeDLList<T> {
   public head: DLListNode<T> | null = null;
   public tail: DLListNode<T> | null = null;
-  // добавление нового значения в начало списка
 
+  // добавление нового значения в начало списка
   addInHead(data: T): DLList<T> {
     // новый узел, который станет head, а текущий head станет next
     const node = new DLListNode<T>(data, this.head);
@@ -79,4 +79,20 @@ export class DLList<T> implements INodeDLList<T> {
     if(!this.tail) this.tail = node;
     return this;
   }
+  // добавление нового значения в конец списка
+  addInTail(data: T): DLList<T> {
+    // новый узел
+    const node = new DLListNode<T>(data);
+    // если это первый эл-т и head нет, то назначаем node в качестве head
+    if(!this.head) this.head = node;
+    // добавляем новый узел к концу списка
+    if(this.tail) this.tail.next = node;
+    // в новом node указываем prev на текущий tail
+    node.prev = this.tail;
+    // переназначаем tail
+    this.tail = node;
+    return this;
+  }
+
+
 }

@@ -1,0 +1,34 @@
+.mainWrapper {
+
+  min-height: 418px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.panel {
+  max-width: 952px;
+  display: grid;
+  grid-template-areas:
+      " i_value b_add_head b_add_tail b_delete_head b_delete_tail"
+      "i_index b_add_index b_add_index b_delete_index b_delete_index";
+  /*grid-template-rows: 1fr 1fr;*/
+  /*grid-template-columns: 204px repeat(4, 175px);*/
+  gap: 12px;
+}
+
+.buttonAddByIndex {
+  grid-area: b_add_index;
+}
+
+.buttonDeleteByIndex {
+  grid-area: b_delete_index;
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+

@@ -103,8 +103,8 @@ export interface IQueuePage {
 }
 
 export interface IListPage {
-  inputValue: string | undefined,
-  inputIndex: string | undefined,
+  inputValue: string,
+  inputIndex: string,
   buttonLoaders: {
     addInHead: boolean,
     addInTail: boolean,

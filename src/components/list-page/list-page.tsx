@@ -3,7 +3,7 @@ import {SolutionLayout} from "../ui/solution-layout/solution-layout";
 import styles from "./list-page.module.css";
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
-import {IArrayCircles, IArrayInLIst, IListPage} from "../../types/components";
+import {IArrayInLIst, IListPage} from "../../types/components";
 import {LinkedList, LListNode} from "../../utils/structures";
 import {wait} from "../../utils/utils";
 import {Circle} from "../ui/circle/circle";

@@ -1,6 +1,7 @@
 import {ElementStates} from "./element-states";
 import {nanoid} from "nanoid";
 import {LinkedList, LListNode} from "../utils/structures";
+import React, {JSXElementConstructor, ReactElement} from "react";
 
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;
 export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
@@ -47,6 +48,15 @@ export interface IStateSorting {
 
 export interface IChart {
   array: number[];
+}
+
+export interface IArrayInLIst {
+  head: ReactElement | string;
+  tail: string | ReactElement;
+  letter: string;
+  index: number;
+  state: ElementStates;
+  key: string
 }
 
 export interface IArrayColumns {

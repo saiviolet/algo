@@ -1,4 +1,4 @@
-import {IArrayCircles, IArrayColumns, IQueueCircles} from "../types/components";
+import {IArrayCircles, IArrayColumns, IArrayInLIst, ILetter, IQueueCircles} from "../types/components";
 import {nanoid} from "nanoid";
 import {ElementStates} from "../types/element-states";
 
@@ -31,6 +31,7 @@ export const swap:Tswap = (array, i, min) => {
   array[i] = array[min];
   array[min] = copy;
 };
+
 
 export const swapColumns:TSwapColumns = (array, i, min) => {
   //копия значения по индексу  i

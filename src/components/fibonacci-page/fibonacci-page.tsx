@@ -1,53 +1,17 @@
 import React, {useEffect, useReducer} from "react";
 // компоненты
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
-import {IStateFibonacci, TFibonacci} from "../../types/components";
+import {IStateFibonacci} from "../../types/components";
 // ui
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
 import {Circle} from "../ui/circle/circle";
 //стили
 import styles from "./fibonacci-page.module.css";
+import {fibonacci, initialState} from "./utils";
 // функции
-import {wait} from "../../utils/utils";
-
-const fibonacci: TFibonacci = async (n, updateState) => {
-  updateState({ buttonLoader: true })
-  let a = 1;
-  let b = 1;
-  let array = [];
-  if (n === 1) {
-    array.push(a);
-    updateState({ array: array });
-  }
-  else {
-    array.push(a);
-    updateState({ array: array });
-    await wait(500);
-    array.push(b);
-    updateState({ array: array });
-    await wait(500);
-    for (let i = 3; i <= n+1; i++) {
-      let c = a + b;
-      a = b;
-      b = c;
-      array.push(b);
-      updateState({ array: array });
-      await wait(500);
-    }
-  }
-  updateState({ buttonLoader: false });
-}
 
 export const FibonacciPage: React.FC = () => {
-
-  const initialState:IStateFibonacci = {
-    buttonLoader: false,
-    buttonDisabled: true,
-    inputValue: '',
-    number: null,
-    array: [],
-  };
 
   const [state, updateState] = useReducer<(state: IStateFibonacci, updates: any) => IStateFibonacci>(
     (state, updates) => ({ ...state, ...updates }),
@@ -82,7 +46,6 @@ export const FibonacciPage: React.FC = () => {
   useEffect(() => {
     if(state.number) {
       fibonacci(state.number, updateState);
-      // updateState({ array: array });
     }
   }, [state.number]);
   return (

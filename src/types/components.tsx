@@ -4,8 +4,17 @@ import {LinkedList, LListNode} from "../utils/structures";
 import React, {JSXElementConstructor, ReactElement} from "react";
 
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;
+export interface IAnimation {
+  type: string
+  data: number[],
+  array?: IArrayColumns[]
+}
+
+export interface IAnimations {
+  animations: IAnimation[];
+}
 export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
-export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
+export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations
 
 export interface ILetter {
   letter: string;

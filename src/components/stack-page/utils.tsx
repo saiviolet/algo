@@ -1,7 +1,23 @@
-import {IStackPage, TStackAnimation} from "../../types/components";
+import {IStack, IStackPage, TStackAnimation} from "../../types/components";
 import {nanoid} from "nanoid";
 import {ElementStates} from "../../types/element-states";
 import {wait} from "../../utils/utils";
+export class Stack<T> implements IStack<T> {
+  private container: T[] = [];
+
+  push = (item: T): void => {
+    this.container.push(item);
+  };
+  pop = (): void => {
+    this.container.pop();
+  };
+  clear = (): void => {
+    this.container = [];
+  };
+
+  getArray = () => this.container;
+
+};
 
 export const initialState:IStackPage = {
   inputValue: '',

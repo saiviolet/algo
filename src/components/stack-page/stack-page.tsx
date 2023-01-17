@@ -4,9 +4,8 @@ import styles from "./stack-page.module.css";
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
 import {IStackPage} from "../../types/components";
-import {Stack} from "../../utils/structures";
 import {Circle} from "../ui/circle/circle";
-import {initialState, stackAnimations} from "./utils";
+import {initialState, Stack, stackAnimations} from "./utils";
 
 export const StackPage: React.FC = () => {
   const stack = useMemo(() => new Stack<string>(), []);

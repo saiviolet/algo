@@ -4,9 +4,8 @@ import styles from "./queue-page.module.css";
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
 import {IQueuePage} from "../../types/components";
-import {Queue, } from "../../utils/structures";
 import {Circle} from "../ui/circle/circle";
-import {initialCircles, initialState, queueAnimation} from "./utils";
+import {Queue, initialState, queueAnimation} from "./utils";
 
 export const QueuePage: React.FC = () => {
   const queue = useMemo(() => new Queue<string>(), []);

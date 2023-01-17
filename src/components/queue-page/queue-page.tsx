@@ -24,19 +24,16 @@ export const QueuePage: React.FC = () => {
 
   const buttonAddHandler = async () => {
     queue.enqueue(state.inputValue);
-    queueAnimation(queue, updateState, state, 'add');
+    queueAnimation(queue, updateState, 'add', state);
   };
 
   const buttonDeleteHandler = async() => {
     queue.dequeue();
-    queueAnimation(queue, updateState, state, 'delete');
+    queueAnimation(queue, updateState, 'delete', state);
   };
   const buttonClearHandler = () => {
     queue.clear();
-    const queueArr = queue.getArray();
-    updateState({inputValue: '',
-      circles: initialCircles,
-    });
+    queueAnimation(queue, updateState, 'clear');
   };
   return (
     <SolutionLayout title="Очередь">

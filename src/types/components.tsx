@@ -16,7 +16,11 @@ export interface IAnimations {
 export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
 export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
 
-export type TQueueAnimation = (queue: IQueue<string>, updateState:React.Dispatch<any>, state: IQueuePage, type: 'add' | 'delete') => void;
+export type TQueueAnimation = (queue: IQueue<string>,
+                               updateState: React.Dispatch<any>,
+                               type: 'add' | 'delete' | 'clear',
+                               state?: IQueuePage) => void;
+export type TStackAnimation = (stack: IStack<string>, updateState:React.Dispatch<any>, type: 'add' | 'delete'|'clear') => void;
 
 export interface ILetter {
   letter: string;

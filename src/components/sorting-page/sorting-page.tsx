@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useState} from "react";
+import React, {useEffect, useReducer} from "react";
 // компоненты
 import {SolutionLayout} from "../ui/solution-layout/solution-layout";
 // стили
@@ -9,11 +9,10 @@ import {Button} from "../ui/button/button";
 import {Column} from "../ui/column/column";
 // типы
 import {Direction} from "../../types/direction";
-import {IStateSorting, TBubbleSort, IArrayColumns, TSelectSort, IAnimations, IAnimation} from "../../types/components";
+import {IStateSorting, IArrayColumns, IAnimations, IAnimation} from "../../types/components";
 import {ElementStates} from "../../types/element-states";
 // вспомогательные функции
 import {getRandomArray} from "../../utils/math";
-import {swapColumns, wait} from "../../utils/utils";
 import {nanoid} from "nanoid";
 import {bubbleSortAnimations, initialState, parseAnimations, selectSortAnimations} from "./ulits";
 

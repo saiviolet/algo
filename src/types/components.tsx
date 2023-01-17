@@ -16,6 +16,8 @@ export interface IAnimations {
 export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
 export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
 
+export type TQueueAnimation = (queue: IQueue<string>, updateState:React.Dispatch<any>, state: IQueuePage, type: 'add' | 'delete') => void;
+
 export interface ILetter {
   letter: string;
   key: string;
@@ -53,10 +55,6 @@ export interface IStateSorting {
   };
   radioInput: string;
   array: IArrayColumns[];
-}
-
-export interface IChart {
-  array: number[];
 }
 
 export interface IArrayInLIst {

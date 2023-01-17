@@ -13,8 +13,8 @@ export interface IAnimation {
 export interface IAnimations {
   animations: IAnimation[];
 }
-export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => void;
-export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations
+export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
+export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
 
 export interface ILetter {
   letter: string;

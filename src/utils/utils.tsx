@@ -32,7 +32,6 @@ export const swap:Tswap = (array, i, min) => {
   array[min] = copy;
 };
 
-
 export const swapColumns:TSwapColumns = (array, i, min) => {
   //копия значения по индексу  i
   const copy = array[i].number;

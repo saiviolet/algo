@@ -5,17 +5,19 @@ import {wait} from "../../utils/utils";
 export class Stack<T> implements IStack<T> {
   private container: T[] = [];
 
-  push = (item: T): void => {
+  push(item: T): void{
     this.container.push(item);
   };
-  pop = (): void => {
+  pop(): void{
     this.container.pop();
   };
-  clear = (): void => {
+  clear(): void {
     this.container = [];
   };
 
-  getArray = () => this.container;
+  getArray(): T[] {
+    return this.container;
+  };
 
 };
 

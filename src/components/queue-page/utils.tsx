@@ -6,7 +6,7 @@ export class Queue<T> implements IQueue<T> {
   private head = 0;
   private tail = 0;
   private size = -1;
-  enqueue = (item: T): void => {
+  enqueue(item: T): void {
     this.container[this.tail++] = item;
     this.size++;
     if(this.size > 6 || this.head >=6) {
@@ -14,7 +14,7 @@ export class Queue<T> implements IQueue<T> {
     }
   };
 
-  dequeue = (): void  => {
+  dequeue(): void {
     if(this.size < 0) {
       throw new Error('Удалять нечего ');
     }
@@ -28,14 +28,22 @@ export class Queue<T> implements IQueue<T> {
     }
   };
 
-  clear = (): void => {
+  clear(): void{
     this.container = [];
   };
 
-  getArray = () => this.container;
-  getTail = () => this.tail;
-  getHead = () => this.head;
-  getSize = () => this.size;
+  getArray():T[] {
+    return this.container;
+  }
+  getTail():number {
+    return this.tail;
+  }
+  getHead(): number {
+    return this.head;
+  }
+  getSize(): number {
+    return this.size;
+  }
 
 };
 

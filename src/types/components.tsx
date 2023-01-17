@@ -1,7 +1,6 @@
 import {ElementStates} from "./element-states";
-import {nanoid} from "nanoid";
-import {LinkedList, LListNode} from "../utils/structures";
-import React, {JSXElementConstructor, ReactElement} from "react";
+import React, {ReactElement} from "react";
+import {LinkedList, LListNode} from "../components/list-page/utils";
 
 export type TFibonacci = (n: number, updateState: React.Dispatch<any>) => void;
 export interface IAnimation {
@@ -15,12 +14,11 @@ export interface IAnimations {
 }
 export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
 export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
-
-export type TQueueAnimation = (queue: IQueue<string>,
-                               updateState: React.Dispatch<any>,
-                               type: 'add' | 'delete' | 'clear',
-                               state?: IQueuePage) => void;
-export type TStackAnimation = (stack: IStack<string>, updateState:React.Dispatch<any>, type: 'add' | 'delete'|'clear') => void;
+export type AnimationTypes = 'add' | 'delete' | 'clear';
+export type TQueueAnimation = (queue: IQueue<string>, updateState: React.Dispatch<any>, type: AnimationTypes, state?: IQueuePage) => void;
+export type TStackAnimation = (stack: IStack<string>, updateState:React.Dispatch<any>, type: AnimationTypes) => void;
+export type ListAnimationTypes = 'addToHead' | 'addToTail' | 'addByIndex' | 'deleteFromHead' | 'deleteFromTail' | 'deleteByIndex';
+export type TListAnimation = (linkedList: LinkedList<string>, updateState:React.Dispatch<any>, type: ListAnimationTypes, state?: IListPage, index?: number) => void;
 
 export interface ILetter {
   letter: string;
@@ -90,7 +88,7 @@ export interface IQueueCircles {
   index: number;
   letter: undefined | string;
   head: string;
-  tail: string;
+  tail: string | ReactElement;
 }
 
 export interface IStackPage {

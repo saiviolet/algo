@@ -13,8 +13,6 @@
   grid-template-areas:
       " i_value b_add_head b_add_tail b_delete_head b_delete_tail"
       "i_index b_add_index b_add_index b_delete_index b_delete_index";
-  /*grid-template-rows: 1fr 1fr;*/
-  /*grid-template-columns: 204px repeat(4, 175px);*/
   gap: 12px;
 }
 
@@ -27,11 +25,12 @@
 }
 
 .list {
-  padding: 0;
+  padding: 0 0 50px 0;
   margin: 0;
   list-style-type: none;
   display: flex;
   align-items: center;
   gap: 12px;
+
 }
 

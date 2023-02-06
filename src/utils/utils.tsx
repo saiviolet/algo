@@ -1,4 +1,4 @@
-import {IArrayCircles, IArrayColumns, IQueueCircles} from "../types/components";
+import {IArrayCircles, IArrayColumns, IArrayInLIst, ILetter, IQueueCircles} from "../types/components";
 import {nanoid} from "nanoid";
 import {ElementStates} from "../types/element-states";
 

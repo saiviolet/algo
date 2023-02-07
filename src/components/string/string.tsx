@@ -24,7 +24,7 @@ export const StringComponent: React.FC = () => {
 
   const getAnimations = async (letters: ILetter[]) => {
     // получаем пары для замен
-    const animationSteps = getReverseString(letters);
+    const { animationSteps } = getReverseString(letters);
     for(let i = 0; i < animationSteps.length; i++) {
       letters[animationSteps[i].i].state = ElementStates.Changing;
       letters[animationSteps[i].last].state = ElementStates.Changing;

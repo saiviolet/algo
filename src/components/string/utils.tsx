@@ -9,6 +9,14 @@ export const initialState:IStateString = {
   string: null,
 };
 
+interface IReverseString {
+  animationSteps: {
+    i: number,
+    last: number
+  }[];
+  array: ILetter[]
+}
+
 export const swapLetters:TSwapLetters = (array, i, min) => {
   //копия значения по индексу  i
   const copy = array[i].letter;
@@ -16,10 +24,10 @@ export const swapLetters:TSwapLetters = (array, i, min) => {
   array[min].letter = copy;
 };
 
-export const getReverseString = (letters: ILetter[]):{i: number, last: number}[] => {
-  const copyArr = Object.assign([], letters);
+export const getReverseString = (letters: ILetter[]): IReverseString => {
+  const copyArr:ILetter[] = Object.assign([], letters);
   let last;
-  let animationsArray: any[] = [];
+  let animationsArray: { i: number, last: number }[] = [];
   for (let i = 0; i < copyArr.length; i++) {
     last = (copyArr.length - 1) - i;
     if(i < last) {
@@ -27,5 +35,5 @@ export const getReverseString = (letters: ILetter[]):{i: number, last: number}[]
       swap(copyArr, i, last);
     }
   };
-  return animationsArray;
+  return {animationSteps: animationsArray, array: copyArr};
 }

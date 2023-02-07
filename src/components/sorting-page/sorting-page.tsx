@@ -9,7 +9,7 @@ import {Button} from "../ui/button/button";
 import {Column} from "../ui/column/column";
 // типы
 import {Direction} from "../../types/direction";
-import {IStateSorting, IArrayColumns, IAnimations, IAnimation} from "../../types/components";
+import {IStateSorting, IArrayColumns, IAnimation} from "../../types/components";
 import {ElementStates} from "../../types/element-states";
 // вспомогательные функции
 import {getRandomArray} from "../../utils/math";
@@ -19,7 +19,7 @@ import {bubbleSortAnimations, initialState, parseAnimations, selectSortAnimation
 
 export const SortingPage: React.FC = () => {
   let animations: IAnimation[] = [];
-  let sort: IAnimations;
+  let sort: { animations: IAnimation[], array: number[] };
   const [state, updateState] = useReducer<(state: IStateSorting, updates: any) => IStateSorting>(
     (state, updates) => ({ ...state, ...updates }),
     initialState

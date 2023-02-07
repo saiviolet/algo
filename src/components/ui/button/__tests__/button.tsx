@@ -4,7 +4,7 @@ import {Button} from "../button";
 
 const buttonTitle = 'For test';
 const onCLickHandler = jest.fn();
-describe('Тесты компонента Button (×﹏×)', () => {
+describe('(×﹏×) Тесты компонента Button', () => {
 
   test('Корректная отрисовка кнопки с текстом', () => {
     const button = render(<Button text={buttonTitle} />);

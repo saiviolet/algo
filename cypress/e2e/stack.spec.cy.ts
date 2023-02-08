@@ -30,9 +30,47 @@ describe('Страница СТЕК', () => {
     cy.get("@input").type(TEST_STACK_VALUES[0]).should('have.value', TEST_STACK_VALUES[0]);
     cy.get("@buttonAdd").should('be.visible').click();
     cy.get(TEST_CIRCLE).as('circle')
-    cy.get('@circle').should('have.text',TEST_STACK_VALUES[0]).and('have.css', 'border', TEST_BORDER_COLOR.Changing);
+    cy.get('@circle')
+      .should('have.text',TEST_STACK_VALUES[0])
+      .and('have.css', 'border', TEST_BORDER_COLOR.Changing)
+    cy.get('@circle').prev().contains('top')
     cy.tick(SHORT_DELAY_IN_MS);
     cy.get('@circle').should('have.text',TEST_STACK_VALUES[0]).and('have.css', 'border', TEST_BORDER_COLOR.Default);
+    // добавление второго элемента
+    cy.get("@input").type(TEST_STACK_VALUES[1]).should('have.value', TEST_STACK_VALUES[1]);
+    cy.get("@buttonAdd").should('be.visible').click();
+    cy.get('@circle')
+      .last()
+      .should('have.text',TEST_STACK_VALUES[1])
+      .and('have.css', 'border', TEST_BORDER_COLOR.Changing);
+    cy.tick(SHORT_DELAY_IN_MS);
+    cy.get('@circle')
+      .last()
+      .should('have.text',TEST_STACK_VALUES[1])
+      .and('have.css', 'border', TEST_BORDER_COLOR.Default);
+    cy.get('@circle')
+      .last()
+      .prev()
+      .contains('top');
+    // добавление третьего элемента
+    cy.get("@input").type(TEST_STACK_VALUES[2]).should('have.value', TEST_STACK_VALUES[2]);
+    cy.get("@buttonAdd").should('be.visible').click();
+    cy.get('@circle')
+      .last()
+      .should('have.text',TEST_STACK_VALUES[2])
+      .and('have.css', 'border', TEST_BORDER_COLOR.Changing);
+    cy.tick(SHORT_DELAY_IN_MS);
+    cy.get('@circle')
+      .last()
+      .should('have.text',TEST_STACK_VALUES[2])
+      .and('have.css', 'border', TEST_BORDER_COLOR.Default);
+    cy.get('@circle')
+      .last()
+      .prev()
+      .contains('top');
   })
-
+  afterEach(() => {
+    cy.get('@input').should('be.empty');
+    cy.get('@buttonAdd').should('be.disabled');
+  })
 });

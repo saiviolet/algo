@@ -33,3 +33,5 @@ export const TEST_STRING_ANIMATIONS = [
 export const TEST_STRING = '123';
 export const TEST_STRING_ARRAY = ['1','2','3'];
 export const TEST_REVERT_STRING_ARRAY = ['3','2','1'];
+
+export const TEST_FIB_ARRAY = ['1','1','2','3','5'];

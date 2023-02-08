@@ -36,5 +36,8 @@ describe('Страница ПОСЛЕДОВАТЕЛЬНОСТЬ ФИБОНАЧЧ
       cy.wrap($circle).should("have.text", TEST_FIB_ARRAY[index])
     });
   })
-
+  afterEach(() => {
+  cy.get('@input').should('be.empty');
+  cy.get('@button').should('be.disabled');
+  })
 });

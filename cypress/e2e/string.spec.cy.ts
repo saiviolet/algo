@@ -59,4 +59,8 @@ describe('Страница СТРОКА', () => {
         .and("have.css", "border", TEST_STRING_ANIMATIONS[3][index]);
     });
   })
+  afterEach(() => {
+    cy.get('@input').should('be.empty');
+    cy.get('@button').should('be.disabled');
+  })
 });

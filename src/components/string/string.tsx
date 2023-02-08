@@ -14,6 +14,7 @@ import {ILetter, IStateString} from "../../types/components";
 // стили
 import styles from './string.module.css';
 import {getReverseString, initialState, swapLetters} from "./utils";
+import {DELAY_IN_MS, SHORT_DELAY_IN_MS} from "../../constants/delays";
 
 export const StringComponent: React.FC = () => {
 
@@ -31,11 +32,11 @@ export const StringComponent: React.FC = () => {
         letters[animationSteps[i].last].state = ElementStates.Changing;
         swapLetters(letters, animationSteps[i].i, animationSteps[i].last);
         updateState({ string: letters });
-        await wait(1000);
+        await wait(DELAY_IN_MS);
         letters[animationSteps[i].i].state = ElementStates.Modified;
         letters[animationSteps[i].last].state = ElementStates.Modified;
         updateState({ string: letters });
-        await wait(1000);
+        await wait(DELAY_IN_MS);
       }
     }
     const centerIndex = Math.ceil(letters.length / 2) - 1;
@@ -56,7 +57,7 @@ export const StringComponent: React.FC = () => {
       return {letter, key: nanoid(10), state: ElementStates.Default}
     });
     updateState({ string: letters, buttonLoader: true });
-    await wait(500);
+    await wait(SHORT_DELAY_IN_MS);
     await getAnimations(letters);
     updateState({ buttonLoader: false })
   };

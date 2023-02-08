@@ -17,19 +17,20 @@ describe('Страница СТРОКА', () => {
     cy.get(TEST_BUTTON).as('button');
   });
 
-  // it('На странице отображены основные элементы', () => {
-  //   cy.get('h3').contains(/строка/i);
-  //   cy.get('@input').should('be.empty');
-  //   cy.get('@button').contains(/развернуть/i);
-  // });
-  //
-  // it('По умолчанию кнопка заблокирована', () => {
-  //   cy.get('@input').should('be.empty');
-  //   cy.get('@button').should('be.disabled');
-  // });
+  it('На странице отображены основные элементы', () => {
+    cy.get('h3').contains(/строка/i);
+    cy.get('@input').should('be.empty');
+    cy.get('@button').contains(/развернуть/i);
+  });
+
+  it('По умолчанию кнопка заблокирована', () => {
+    cy.get('@input').should('be.empty');
+    cy.get('@button').should('be.disabled');
+  });
 
   it('Анимация работает корректно', () => {
     cy.clock();
+    // есть вариант сделать все менее топорно?????
     cy.get("@input").type(TEST_STRING).should("have.value", TEST_STRING);
     cy.get("@button").should("be.visible").click();
     cy.get(TEST_CIRCLE).as('circle');
@@ -43,6 +44,7 @@ describe('Страница СТРОКА', () => {
       cy.wrap($circle)
         .should("have.text", TEST_REVERT_STRING_ARRAY[index])
         .and("have.css", "border", TEST_STRING_ANIMATIONS[1][index]);
+      // cy.wrap($circle).contains(TEST_REVERT_STRING_ARRAY[index]) && cy.wrap($circle).should("have.css", "border", TEST_STRING_ANIMATIONS[1][index]);
     });
     cy.tick(DELAY_IN_MS);
     cy.get("@circle").each(($circle, index) => {

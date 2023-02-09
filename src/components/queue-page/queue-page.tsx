@@ -52,6 +52,7 @@ export const QueuePage: React.FC = () => {
               disabled={state.buttonBlocks.addBtn}
               linkedList={"small"}
               onClick={buttonAddHandler}
+              testData={'buttonAdd'}
             />
             <Button
               text={"Удалить"}
@@ -59,6 +60,7 @@ export const QueuePage: React.FC = () => {
               disabled={state.buttonBlocks.deleteBtn}
               linkedList={"small"}
               onClick={buttonDeleteHandler}
+              testData={'buttonDelete'}
             />
           </div>
           <Button
@@ -67,6 +69,7 @@ export const QueuePage: React.FC = () => {
             disabled={state.buttonBlocks.clearBtn}
             linkedList={"small"}
             onClick={buttonClearHandler}
+            testData={'buttonClear'}
           />
         </div>
         <ul className={styles.circles}>

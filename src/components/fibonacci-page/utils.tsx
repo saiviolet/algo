@@ -1,5 +1,6 @@
 import {IStateFibonacci, TFibonacci} from "../../types/components";
 import {wait} from "../../utils/utils";
+import {DELAY_IN_MS} from "../../constants/delays";
 
 export const initialState:IStateFibonacci = {
   buttonLoader: false,
@@ -21,17 +22,17 @@ export const fibonacci: TFibonacci = async (n, updateState) => {
   else {
     array.push(a);
     updateState({ array: array });
-    await wait(1000);
+    await wait(DELAY_IN_MS);
     array.push(b);
     updateState({ array: array });
-    await wait(1000);
+    await wait(DELAY_IN_MS);
     for (let i = 3; i <= n+1; i++) {
       let c = a + b;
       a = b;
       b = c;
       array.push(b);
       updateState({ array: array });
-      await wait(1000);
+      await wait(DELAY_IN_MS);
     }
   }
   updateState({ buttonLoader: false });

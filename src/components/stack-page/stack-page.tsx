@@ -6,6 +6,8 @@ import {Button} from "../ui/button/button";
 import {IStackPage} from "../../types/components";
 import {Circle} from "../ui/circle/circle";
 import {initialState, Stack, stackAnimations} from "./utils";
+import {wait} from "../../utils/utils";
+import {SHORT_DELAY_IN_MS} from "../../constants/delays";
 
 export const StackPage: React.FC = () => {
   const stack = useMemo(() => new Stack<string>(), []);
@@ -23,16 +25,25 @@ export const StackPage: React.FC = () => {
 
   const buttonAddHandler = async () => {
     stack.push(state.inputValue);
+    updateState({buttonLoaders: {...state.buttonLoaders, addBtn: true}, buttonBlocks: {...state.buttonBlocks, deleteBtn: true, clearBtn: true} });
     stackAnimations(stack, updateState, 'add');
+    await wait(SHORT_DELAY_IN_MS);
+    await updateState({buttonLoaders: {...state.buttonLoaders, addBtn: false}, buttonBlocks: {...state.buttonBlocks, addBtn: true, deleteBtn: false, clearBtn: false} });
   };
 
   const buttonDeleteHandler = async() => {
     stack.pop();
+    updateState({buttonLoaders: {...state.buttonLoaders, deleteBtn: true}, buttonBlocks: {...state.buttonBlocks, addBtn: true, clearBtn: true} });
     stackAnimations(stack, updateState, 'delete');
+    await wait(SHORT_DELAY_IN_MS);
+    await updateState({buttonLoaders: {...state.buttonLoaders, deleteBtn: false}, buttonBlocks: {...state.buttonBlocks, addBtn: true, deleteBtn: false, clearBtn: false} });
   };
-  const buttonClearHandler = () => {
+  const buttonClearHandler = async () => {
     stack.clear();
+    updateState({buttonLoaders: {...state.buttonLoaders, clearBtn: true}, buttonBlocks: {...state.buttonBlocks, addBtn: true, deleteBtn: true} });
     stackAnimations(stack, updateState, 'clear');
+    await wait(SHORT_DELAY_IN_MS);
+    await updateState({buttonLoaders: {...state.buttonLoaders, clearBtn: false}, buttonBlocks: {...state.buttonBlocks, addBtn: true, deleteBtn: false, clearBtn: false} });
   };
   return (
     <SolutionLayout title="Стек">
@@ -52,6 +63,7 @@ export const StackPage: React.FC = () => {
               disabled={state.buttonBlocks.addBtn}
               linkedList={"small"}
               onClick={buttonAddHandler}
+              testData={'buttonAdd'}
             />
             <Button
               text={"Удалить"}
@@ -59,6 +71,7 @@ export const StackPage: React.FC = () => {
               disabled={state.buttonBlocks.deleteBtn}
               linkedList={"small"}
               onClick={buttonDeleteHandler}
+              testData={'buttonDelete'}
             />
           </div>
           <Button
@@ -67,6 +80,7 @@ export const StackPage: React.FC = () => {
             disabled={state.buttonBlocks.clearBtn}
             linkedList={"small"}
             onClick={buttonClearHandler}
+            testData={'buttonClear'}
           />
         </div>
         <ul className={styles.circles}>

@@ -5,6 +5,8 @@ import {nanoid} from "nanoid";
 import {ElementStates} from "../../types/element-states";
 import {wait} from "../../utils/utils";
 
+
+export const testList = ['щука', 'в', 'реке', 'жила'];
 export class LListNode<T> implements INode<T>{
   constructor(
     public data: T,
@@ -146,7 +148,7 @@ export const initialState:IListPage = {
     addByIndex: true,
     deleteFromHead: false,
     deleteFromTail: false,
-    deleteByIndex: false,
+    deleteByIndex: true,
   },
   list: [],
 };
@@ -198,7 +200,7 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
       insertArray[0].state = ElementStates.Default;
       updateState({
         buttonLoaders: {...state!.buttonLoaders, addInHead: false},
-        buttonBlocks: {...state!.buttonBlocks, deleteFromHead: false, deleteFromTail: false, deleteByIndex: false, addInTail: true, addInHead: true},
+        buttonBlocks: {...state!.buttonBlocks, deleteFromHead: false, deleteFromTail: false, deleteByIndex: true, addInTail: true, addInHead: true},
         list: insertArray,
       });
       break;
@@ -214,7 +216,7 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
           key: nanoid(10),
           state: ElementStates.Default,
           letter: item.letter,
-          head: index === list!.length-2 ? littleCircle : '',
+          head: index === list!.length-2 ? littleCircle : index === 0 ? 'head' : '',
           tail: index === state!.list!.length-1 ? 'tail' : '',
           index: index,
         }
@@ -243,7 +245,7 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
       await wait(1000);
       updateState({
         buttonLoaders: {...state!.buttonLoaders, addInTail: false},
-        buttonBlocks: {...state!.buttonBlocks, addInHead: true, addInTail: true, addByIndex: true, deleteFromHead: false, deleteFromTail: false},
+        buttonBlocks: {...state!.buttonBlocks, addInHead: true, addInTail: true, addByIndex: true, deleteByIndex: true, deleteFromHead: false, deleteFromTail: false},
         list: afterInsertArray,
       });
       break;
@@ -268,6 +270,7 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
         buttonLoaders: {...state!.buttonLoaders, addByIndex: true},
         buttonBlocks: {...state!.buttonBlocks, addInHead: true, addInTail: true, deleteFromHead: true, deleteFromTail: true, deleteByIndex: true},
         inputValue: '',
+        inputIndex: '',
         list: beforeInsertArray,
       });
       while(animationLength < index!) {
@@ -300,7 +303,7 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
       insertArrWithNewValue[index!].state = ElementStates.Default;
       updateState({
         buttonLoaders: {...state!.buttonLoaders, addByIndex: false},
-        buttonBlocks: {...state!.buttonBlocks, deleteFromHead: false, deleteFromTail: false, deleteByIndex: false, addByIndex: true, addInTail: true, addInHead: true},
+        buttonBlocks: {...state!.buttonBlocks, deleteFromHead: false, deleteFromTail: false, deleteByIndex: true, addByIndex: true, addInTail: true, addInHead: true},
         list: insertArrWithNewValue,
       });
       break;
@@ -388,7 +391,8 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
       updateState({
         buttonLoaders: {...state!.buttonLoaders, deleteByIndex: true},
         buttonBlocks: {...state!.buttonBlocks, addInHead: true, addInTail: true, addByIndex: true, deleteFromHead: true, deleteFromTail: true},
-        inputIndex: ''
+        inputIndex: '',
+        inputValue: '',
       });
       littleCircle = <Circle
         letter={list![index!].data}
@@ -429,7 +433,7 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
         });
         updateState({
           buttonLoaders: {...state!.buttonLoaders, deleteByIndex: false},
-          buttonBlocks: {...state!.buttonBlocks, deleteFromHead: false, deleteFromTail: false},
+          buttonBlocks: {...state!.buttonBlocks, deleteFromHead: false, deleteFromTail: false, deleteByIndex: true, addByIndex: true, addInHead: true, addInTail:true},
           list: listArray
         });
       }

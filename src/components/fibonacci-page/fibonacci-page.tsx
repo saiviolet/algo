@@ -9,6 +9,7 @@ import {Circle} from "../ui/circle/circle";
 //стили
 import styles from "./fibonacci-page.module.css";
 import {fibonacci, initialState} from "./utils";
+import {SHORT_DELAY_IN_MS} from "../../constants/delays";
 // функции
 
 export const FibonacciPage: React.FC = () => {
@@ -36,11 +37,13 @@ export const FibonacciPage: React.FC = () => {
     }
     else alert('¯\\_(ツ)_/¯');
   }
-  function buttonHandler () {
+  async function buttonHandler () {
     const value = Number(state.inputValue);
     if ((value > 19) || (value < 1 ) || (isNaN(value))) fanny(value)
     else {
-      updateState({ number: value });
+      updateState({ number: value, buttonLoader: true });
+      await(SHORT_DELAY_IN_MS);
+      updateState({ number: value, inputValue: '', buttonDisabled: true });
     }
   };
   useEffect(() => {

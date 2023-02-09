@@ -8,7 +8,7 @@ import {Circle} from "../ui/circle/circle";
 import {nanoid} from "nanoid";
 import {ElementStates} from "../../types/element-states";
 import {ArrowIcon} from "../ui/icons/arrow-icon";
-import {initialState, LinkedList, listAnimations} from "./utils";
+import {initialState, LinkedList, listAnimations, testList} from "./utils";
 
 export const ListPage: React.FC = () => {
   const linkedList = useMemo(() => new LinkedList<string>(), []);
@@ -19,8 +19,7 @@ export const ListPage: React.FC = () => {
   );
 
   useEffect(() => {
-    const hardcode = ['щука', 'в', 'реке', 'жила'];
-    hardcode.forEach(item => {
+    testList.forEach(item => {
       linkedList.addInTail(item);
     });
     const list = linkedList.toArray();
@@ -39,16 +38,22 @@ export const ListPage: React.FC = () => {
 
   const inputValueHandler = (evt: React.FormEvent<HTMLInputElement>) => {
     let input = evt.target as HTMLInputElement;
-    input.value
+    (input.value)
       ? updateState({ buttonBlocks: {...state.buttonBlocks, addInHead: false, addInTail: false}, inputValue: input.value })
       : updateState({ buttonBlocks: {...state.buttonBlocks, addInHead: true, addInTail: true}, inputValue: input.value });
+    (input.value && state.inputValue)
+      ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false }, inputIndex: input.value })
+      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true }, inputIndex: input.value });
   };
 
   const inputIndexHandler = (evt: React.FormEvent<HTMLInputElement>) => {
     let input = evt.target as HTMLInputElement;
     (input.value && state.inputValue)
-      ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false}, inputIndex: input.value })
-      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true}, inputIndex: input.value });
+      ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false, deleteByIndex: false}, inputIndex: input.value })
+      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true}, inputIndex: input.value });
+    (input.value)
+      ? updateState({ buttonBlocks: {...state.buttonBlocks, deleteByIndex: false}, inputIndex: input.value })
+      : updateState({ buttonBlocks: {...state.buttonBlocks, deleteByIndex: true}, inputIndex: input.value });
   };
 
   const buttonAddToHead = async() => {
@@ -100,6 +105,7 @@ export const ListPage: React.FC = () => {
             onChange={inputValueHandler}
             type={"text"} isLimitText
             value={state.inputValue}
+            testData={'inputValue'}
           />
           <Button
             extraClass={styles.buttonAddHead}
@@ -108,6 +114,7 @@ export const ListPage: React.FC = () => {
             disabled={state.buttonBlocks.addInHead}
             linkedList={"small"}
             onClick={buttonAddToHead}
+            testData={'buttonAddToHead'}
           />
           <Button
             text={"Добавить в tail"}
@@ -115,6 +122,7 @@ export const ListPage: React.FC = () => {
             disabled={state.buttonBlocks.addInTail}
             linkedList={"small"}
             onClick={buttonAddToTail}
+            testData={'buttonAddToTail'}
           />
           <Button
             text={"Удалить из head"}
@@ -122,6 +130,7 @@ export const ListPage: React.FC = () => {
             disabled={state.buttonBlocks.deleteFromHead}
             linkedList={"small"}
             onClick={buttonDeleteFromHead}
+            testData={'buttonDeleteFromHead'}
           />
           <Button
             text={"Удалить из tail"}
@@ -129,6 +138,7 @@ export const ListPage: React.FC = () => {
             disabled={state.buttonBlocks.deleteFromTail}
             linkedList={"small"}
             onClick={buttonDeleteFromTail}
+            testData={'buttonDeleteFromTail'}
           />
           <Input
             placeholder={"Введите индекс"}
@@ -136,6 +146,7 @@ export const ListPage: React.FC = () => {
             onChange={inputIndexHandler}
             type={"text"} isLimitText
             value={state.inputIndex}
+            testData={'inputIndex'}
           />
           <Button
             text={"Добавить по индексу"}
@@ -143,6 +154,7 @@ export const ListPage: React.FC = () => {
             disabled={state.buttonBlocks.addByIndex}
             onClick={buttonAddByIndex}
             extraClass={styles.buttonAddByIndex}
+            testData={'buttonAddByIndex'}
           />
           <Button
             text={"Удалить по индексу"}
@@ -150,6 +162,7 @@ export const ListPage: React.FC = () => {
             disabled={state.buttonBlocks.deleteByIndex}
             extraClass={styles.buttonDeleteByIndex}
             onClick={buttonDeleteByIndex}
+            testData={'buttonDeleteByIndex'}
           />
         </div>
         <ul className={styles.list}>

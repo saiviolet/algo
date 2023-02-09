@@ -1,6 +1,8 @@
 import {circles, wait} from "../../utils/utils";
 import {IQueue, IQueuePage, TQueueAnimation} from "../../types/components";
 import {ElementStates} from "../../types/element-states";
+import {HEAD, TAIL} from "../../constants/element-captions";
+import {DELAY_IN_MS} from "../../constants/delays";
 export class Queue<T> implements IQueue<T> {
   private container: T[] = [];
   private head = 0;
@@ -82,22 +84,22 @@ export const queueAnimation:TQueueAnimation = async (queue, updateState, type, s
           if(index === queueArrLength) {
             circle.state = ElementStates.Changing;
           };
-          if(index === queueTail) circle.tail = 'tail';
-          if(index === queueHead) circle.head = 'head';
+          if(index === queueTail) circle.tail = TAIL;
+          if(index === queueHead) circle.head = HEAD;
           return circle;
         }),
         buttonBlocks: {...state!.buttonBlocks, addBtn: false, deleteBtn: true, clearBtn: true},
         buttonLoaders: {...state!.buttonLoaders, addBtn: true},
       });
-      await wait(1000);
+      await wait(DELAY_IN_MS);
       updateState({inputValue: '',
         circles: state!.circles.map((circle, index) => {
           circle.letter = queueArr[index];
           circle.tail = '';
           circle.head = '';
           circle.state = ElementStates.Default;
-          if(index === queueTail) circle.tail = 'tail';
-          if(index === queueHead) circle.head = 'head';
+          if(index === queueTail) circle.tail = TAIL;
+          if(index === queueHead) circle.head = HEAD;
           return circle;
         }),
         buttonBlocks: {...state!.buttonBlocks, addBtn: true, deleteBtn: false, clearBtn: false},
@@ -113,23 +115,23 @@ export const queueAnimation:TQueueAnimation = async (queue, updateState, type, s
           circle.state = ElementStates.Default;
           if(index === queueHead) {
             circle.state = ElementStates.Changing;
-            circle.head = 'head';
+            circle.head = HEAD;
           };
-          if(index === queueTail) circle.tail = 'tail';
+          if(index === queueTail) circle.tail = TAIL;
           return circle;
         }),
         buttonBlocks: {...state!.buttonBlocks, addBtn: true, deleteBtn: false, clearBtn: true},
         buttonLoaders: {...state!.buttonLoaders, deleteBtn: true},
       });
-      await wait(1000);
+      await wait(DELAY_IN_MS);
       updateState({inputValue: '',
         circles: state!.circles.map((circle, index) => {
           circle.letter = queueArr[index];
           circle.tail = '';
           circle.head = '';
           circle.state = ElementStates.Default;
-          if(index === queueTail) circle.tail = 'tail';
-          if(index === queueHead) circle.head = 'head';
+          if(index === queueTail) circle.tail = TAIL;
+          if(index === queueHead) circle.head = HEAD;
           return circle;
         }),
         buttonBlocks: {...state!.buttonBlocks, addBtn: false, deleteBtn: false, clearBtn: false},

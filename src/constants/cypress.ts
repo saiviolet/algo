@@ -39,3 +39,4 @@ export const TEST_REVERT_STRING_ARRAY = ['3','2','1'];
 
 export const TEST_FIB_ARRAY = ['1','1','2','3','5'];
 export const TEST_STACK_VALUES = ['1','2','3'];
+export const TEST_QUEUE_VALUES = ['A','B','C','D'];

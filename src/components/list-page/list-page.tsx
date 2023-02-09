@@ -38,12 +38,13 @@ export const ListPage: React.FC = () => {
 
   const inputValueHandler = (evt: React.FormEvent<HTMLInputElement>) => {
     let input = evt.target as HTMLInputElement;
+    (input.value && state.inputValue)
+      ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false }, inputValue: input.value })
+      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true }, inputValue: input.value });
     (input.value)
       ? updateState({ buttonBlocks: {...state.buttonBlocks, addInHead: false, addInTail: false}, inputValue: input.value })
       : updateState({ buttonBlocks: {...state.buttonBlocks, addInHead: true, addInTail: true}, inputValue: input.value });
-    (input.value && state.inputValue)
-      ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false }, inputIndex: input.value })
-      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true }, inputIndex: input.value });
+
   };
 
   const inputIndexHandler = (evt: React.FormEvent<HTMLInputElement>) => {
@@ -52,8 +53,8 @@ export const ListPage: React.FC = () => {
       ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false, deleteByIndex: false}, inputIndex: input.value })
       : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true}, inputIndex: input.value });
     (input.value)
-      ? updateState({ buttonBlocks: {...state.buttonBlocks, deleteByIndex: false}, inputIndex: input.value })
-      : updateState({ buttonBlocks: {...state.buttonBlocks, deleteByIndex: true}, inputIndex: input.value });
+      ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false, deleteByIndex: false}, inputIndex: input.value })
+      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true}, inputIndex: input.value });
   };
 
   const buttonAddToHead = async() => {

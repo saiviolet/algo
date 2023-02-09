@@ -391,7 +391,8 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
       updateState({
         buttonLoaders: {...state!.buttonLoaders, deleteByIndex: true},
         buttonBlocks: {...state!.buttonBlocks, addInHead: true, addInTail: true, addByIndex: true, deleteFromHead: true, deleteFromTail: true},
-        inputIndex: ''
+        inputIndex: '',
+        inputValue: '',
       });
       littleCircle = <Circle
         letter={list![index!].data}
@@ -432,7 +433,7 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
         });
         updateState({
           buttonLoaders: {...state!.buttonLoaders, deleteByIndex: false},
-          buttonBlocks: {...state!.buttonBlocks, deleteFromHead: false, deleteFromTail: false},
+          buttonBlocks: {...state!.buttonBlocks, deleteFromHead: false, deleteFromTail: false, deleteByIndex: true, addByIndex: true, addInHead: true, addInTail:true},
           list: listArray
         });
       }

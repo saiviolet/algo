@@ -1,13 +1,17 @@
-import React, {ReactElement, useEffect, useMemo, useReducer} from "react";
+import React, {Fragment, useEffect, useMemo, useReducer} from "react";
+// ui
 import {SolutionLayout} from "../ui/solution-layout/solution-layout";
-import styles from "./list-page.module.css";
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
-import {IListPage} from "../../types/components";
 import {Circle} from "../ui/circle/circle";
+import {ArrowIcon} from "../ui/icons/arrow-icon";
+// компоненты
+import {IListPage} from "../../types/components";
+// стили
+import styles from "./list-page.module.css";
+// вспомогательные
 import {nanoid} from "nanoid";
 import {ElementStates} from "../../types/element-states";
-import {ArrowIcon} from "../ui/icons/arrow-icon";
 import {initialState, LinkedList, listAnimations, testList} from "./utils";
 
 export const ListPage: React.FC = () => {
@@ -49,12 +53,22 @@ export const ListPage: React.FC = () => {
 
   const inputIndexHandler = (evt: React.FormEvent<HTMLInputElement>) => {
     let input = evt.target as HTMLInputElement;
-    (input.value && state.inputValue)
-      ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false, deleteByIndex: false}, inputIndex: input.value })
-      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true}, inputIndex: input.value });
-    (input.value)
-      ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false, deleteByIndex: false}, inputIndex: input.value })
-      : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true}, inputIndex: input.value });
+    let value = input.value.replace(/[^0-9]/g, "");
+    const lengthList = linkedList.toArray()?.length;
+    const numberValue = Number(value);
+    console.log(lengthList);
+    console.log(input.value);
+    if( (numberValue < 0) || (numberValue > lengthList! -1 ) ) {
+      updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true} })
+    }
+    else {
+      (value && state.inputValue)
+        ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false, deleteByIndex: false}, inputIndex: value })
+        : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true}, inputIndex: value });
+      (value)
+        ? updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: false, deleteByIndex: false}, inputIndex: value })
+        : updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true}, inputIndex: value });
+    }
   };
 
   const buttonAddToHead = async() => {
@@ -143,9 +157,10 @@ export const ListPage: React.FC = () => {
           />
           <Input
             placeholder={"Введите индекс"}
-            maxLength={1}
+            max={1}
             onChange={inputIndexHandler}
-            type={"text"} isLimitText
+            type={"number"}
+            isLimitText
             value={state.inputIndex}
             testData={'inputIndex'}
           />
@@ -167,7 +182,7 @@ export const ListPage: React.FC = () => {
           />
         </div>
         <ul className={styles.list}>
-          {state.list && state.list.map((circle, index) => <React.Fragment key={circle.key}><Circle
+          { state.list && state.list.map((circle, index) => <Fragment key={circle.key}><Circle
             letter={circle.letter}
             key={circle.key}
             state = {circle.state}
@@ -176,8 +191,8 @@ export const ListPage: React.FC = () => {
             index={circle.index}
           />
             {index <= state.list.length-2 && <ArrowIcon />}
-            </React.Fragment>
-          ) }
+            </Fragment>
+          )}
         </ul>
       </div>
     </SolutionLayout>

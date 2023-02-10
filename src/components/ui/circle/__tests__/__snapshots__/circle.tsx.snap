@@ -10,6 +10,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
     />
     <div
       class="circle   default"
+      data-test="circle"
     >
       <p
         class="text text_type_circle text_color_input letter"
@@ -35,6 +36,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
     />
     <div
       class="circle   default"
+      data-test="circle"
     >
       <p
         class="text text_type_circle text_color_input letter"
@@ -61,6 +63,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
   />
   <div
     className="circle   changing"
+    data-test="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -84,6 +87,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
   />
   <div
     className="circle   default"
+    data-test="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -107,6 +111,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
   />
   <div
     className="circle   modified"
+    data-test="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -137,6 +142,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
         />
         <div
           class="circle   default"
+          data-test="circle"
         >
           <p
             class="text text_type_circle text_color_input letter"
@@ -154,6 +160,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
     </div>
     <div
       class="circle   default"
+      data-test="circle"
     >
       <p
         class="text text_type_circle text_color_input letter"
@@ -179,6 +186,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
     />
     <div
       class="circle   default"
+      data-test="circle"
     >
       <p
         class="text text_type_circle text_color_input letter"
@@ -198,6 +206,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
         />
         <div
           class="circle   default"
+          data-test="circle"
         >
           <p
             class="text text_type_circle text_color_input letter"
@@ -226,6 +235,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
   />
   <div
     className="circle   default"
+    data-test="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -251,6 +261,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
   />
   <div
     className="circle  small default"
+    data-test="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -277,6 +288,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
     </div>
     <div
       class="circle   default"
+      data-test="circle"
     >
       <p
         class="text text_type_circle text_color_input letter"
@@ -302,6 +314,7 @@ exports[`( ͡⊙ ͜ʖ ͡⊙)Тесты компонента Circle Отрисо�
     />
     <div
       class="circle   default"
+      data-test="circle"
     >
       <p
         class="text text_type_circle text_color_input letter"

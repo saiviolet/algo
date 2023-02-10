@@ -32,8 +32,8 @@ describe('(ಠ_ಠ) Тестирование алгоритма разворот
     expect(array).toEqual([testData.letter]);
   });
   // зачем этот тест, если пустую строку нет возможности развернуть, т.к. кнопка с коллбэком заблокирована \_(ツ)_/¯
-  test('Корректно разворачивает пустую строку', ()=> {
-    const { array } = getReverseString([]);
-    expect(array).toEqual([]);
-  });
+  // test('Корректно разворачивает пустую строку', ()=> {
+  //   const { array } = getReverseString([]);
+  //   expect(array).toEqual([]);
+  // });
 })

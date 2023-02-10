@@ -1,10 +1,14 @@
 import React, {useMemo, useReducer} from "react";
+// ui
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
-import styles from "./queue-page.module.css";
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
-import {IQueuePage} from "../../types/components";
 import {Circle} from "../ui/circle/circle";
+// компоненты
+import {IQueuePage} from "../../types/components";
+// стили
+import styles from "./queue-page.module.css";
+// вспомогательные
 import {Queue, initialState, queueAnimation} from "./utils";
 
 export const QueuePage: React.FC = () => {

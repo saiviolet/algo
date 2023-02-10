@@ -96,9 +96,10 @@ describe('Страница СТЕК', () => {
     cy.tick(SHORT_DELAY_IN_MS);
     cy.get("@circle").should("have.length", 1);
     cy.get("@buttonDelete").should('be.visible').click();
-    cy.get('@circle').should('not.exist');
-    cy.get("@buttonAdd").should('be.visible');
-    cy.get("@buttonDelete").should('be.visible');
+    cy.get("@circle").should('not.exist');
+    cy.get('@buttonAdd').should('be.disabled');
+    cy.get('@buttonDelete').should('be.disabled');
+    cy.get('@buttonClear').should('be.disabled');
   });
 
   it('Корректная очистка стека', () => {
@@ -117,6 +118,9 @@ describe('Страница СТЕК', () => {
     cy.get("@buttonClear").should('be.visible').click();
     cy.tick(SHORT_DELAY_IN_MS);
     cy.get('@circle').should('not.exist');
+    cy.get('@buttonAdd').should('be.disabled');
+    cy.get('@buttonDelete').should('be.disabled');
+    cy.get('@buttonClear').should('be.disabled');
   })
 
   afterEach(() => {

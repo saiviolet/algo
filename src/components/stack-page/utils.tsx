@@ -31,8 +31,8 @@ export const initialState:IStackPage = {
   },
   buttonBlocks: {
     addBtn: true,
-    deleteBtn: false,
-    clearBtn: false,
+    deleteBtn: true,
+    clearBtn: true,
   },
   array: [],
 };
@@ -64,7 +64,7 @@ export const stackAnimations:TStackAnimation = async (stack, updateState, type) 
       })});
     break;
   case 'clear':
-    updateState({array});
+    updateState({ array });
     break;
   default:
     alert( "LOL" );

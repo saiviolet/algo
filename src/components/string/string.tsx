@@ -8,13 +8,14 @@ import {Button} from "../ui/button/button";
 import {Circle} from "../ui/circle/circle";
 // ф-ии
 import {wait} from "../../utils/utils";
+import {getReverseString, initialState, swapLetters} from "./utils";
+import {DELAY_IN_MS, SHORT_DELAY_IN_MS} from "../../constants/delays";
 // типы
 import {ElementStates} from "../../types/element-states";
 import {ILetter, IStateString} from "../../types/components";
 // стили
 import styles from './string.module.css';
-import {getReverseString, initialState, swapLetters} from "./utils";
-import {DELAY_IN_MS, SHORT_DELAY_IN_MS} from "../../constants/delays";
+
 
 export const StringComponent: React.FC = () => {
 

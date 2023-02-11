@@ -51,7 +51,7 @@ export const StackPage: React.FC = () => {
     updateState({buttonLoaders: {...state.buttonLoaders, clearBtn: true}, buttonBlocks: {...state.buttonBlocks, addBtn: true, deleteBtn: true} });
     stackAnimations(stack, updateState, 'clear');
     await wait(SHORT_DELAY_IN_MS);
-    await updateState({buttonLoaders: {...state.buttonLoaders, clearBtn: false}, buttonBlocks: {...state.buttonBlocks, addBtn: true, deleteBtn: false, clearBtn: false} });
+    await updateState({buttonLoaders: {...state.buttonLoaders, clearBtn: false}, buttonBlocks: {...state.buttonBlocks, addBtn: true, deleteBtn: true, clearBtn: true} });
   };
   return (
     <SolutionLayout title="Стек">

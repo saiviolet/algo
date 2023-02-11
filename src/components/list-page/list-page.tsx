@@ -56,8 +56,6 @@ export const ListPage: React.FC = () => {
     let value = input.value.replace(/[^0-9]/g, "");
     const lengthList = linkedList.toArray()?.length;
     const numberValue = Number(value);
-    console.log(lengthList);
-    console.log(input.value);
     if( (numberValue < 0) || (numberValue > lengthList! -1 ) ) {
       updateState({ buttonBlocks: {...state.buttonBlocks, addByIndex: true, deleteByIndex: true} })
     }

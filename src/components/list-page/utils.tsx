@@ -4,6 +4,7 @@ import {Circle} from "../ui/circle/circle";
 import {nanoid} from "nanoid";
 import {ElementStates} from "../../types/element-states";
 import {wait} from "../../utils/utils";
+import {SHORT_DELAY_IN_MS} from "../../constants/delays";
 
 
 export const testList = ['щука', 'в', 'реке', 'жила'];
@@ -413,7 +414,7 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
           }
         });
         updateState({list: listArray});
-        await wait(1000);
+        await wait(SHORT_DELAY_IN_MS);
         animationLength++;
       }
       if(state!.inputIndex) linkedList.deleteByIndex(Number(state!.inputIndex));
@@ -425,7 +426,7 @@ export const listAnimations: TListAnimation = async(linkedList, updateState, typ
           tail: littleCircle,
         }
         updateState({list: listArray});
-        await wait(1000);
+        await wait(SHORT_DELAY_IN_MS);
         listArray.splice(index!, 1);
         listArray.forEach((item, index) => {
           item.state = ElementStates.Default;

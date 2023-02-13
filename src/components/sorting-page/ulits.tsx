@@ -39,7 +39,8 @@ export const selectSortAnimations:TSelectSort = (array, type) => {
     swapColumns(copyArray, i, min);
     animationsArray.push( { type: 'swap', data: [i, min], array: [...copyArray] } );
   }
-  return {animations: animationsArray}
+  const arrayForTesting = copyArray.map(item => item.number);
+  return {animations: animationsArray, array: arrayForTesting}
 }
 
 export async function parseAnimations(animations: IAnimation[], updateState: Dispatch<any>, arr: IArrayColumns[], algorithm: string) {
@@ -109,6 +110,7 @@ export const bubbleSortAnimations:TBubbleSort = (array, type) => {
         }
       };
     }
-  }
-  return {animations: animationsArray}
+  };
+  const arrayForTesting = copyArray.map(item => item.number);
+  return {animations: animationsArray, array: arrayForTesting}
 }

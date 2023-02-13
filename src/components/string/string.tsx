@@ -8,12 +8,14 @@ import {Button} from "../ui/button/button";
 import {Circle} from "../ui/circle/circle";
 // ф-ии
 import {wait} from "../../utils/utils";
+import {getReverseString, initialState, swapLetters} from "./utils";
+import {DELAY_IN_MS, SHORT_DELAY_IN_MS} from "../../constants/delays";
 // типы
 import {ElementStates} from "../../types/element-states";
 import {ILetter, IStateString} from "../../types/components";
 // стили
 import styles from './string.module.css';
-import {getReverseString, initialState, swapLetters} from "./utils";
+
 
 export const StringComponent: React.FC = () => {
 
@@ -24,23 +26,26 @@ export const StringComponent: React.FC = () => {
 
   const getAnimations = async (letters: ILetter[]) => {
     // получаем пары для замен
-    const animationSteps = getReverseString(letters);
-    for(let i = 0; i < animationSteps.length; i++) {
-      letters[animationSteps[i].i].state = ElementStates.Changing;
-      letters[animationSteps[i].last].state = ElementStates.Changing;
-      swapLetters(letters, animationSteps[i].i, animationSteps[i].last);
-      updateState({ string: letters });
-      await wait(1000);
-      letters[animationSteps[i].i].state = ElementStates.Modified;
-      letters[animationSteps[i].last].state = ElementStates.Modified;
-      updateState({ string: letters });
-      await wait(1000);
+    const { animationSteps } = getReverseString(letters);
+    if(animationSteps) {
+      for(let i = 0; i < animationSteps.length; i++) {
+        letters[animationSteps[i].i].state = ElementStates.Changing;
+        letters[animationSteps[i].last].state = ElementStates.Changing;
+        swapLetters(letters, animationSteps[i].i, animationSteps[i].last);
+        updateState({ string: letters });
+        await wait(DELAY_IN_MS);
+        letters[animationSteps[i].i].state = ElementStates.Modified;
+        letters[animationSteps[i].last].state = ElementStates.Modified;
+        updateState({ string: letters });
+        await wait(DELAY_IN_MS);
+      }
     }
     const centerIndex = Math.ceil(letters.length / 2) - 1;
     if(letters.length % 2 !== 0) {
       letters[centerIndex].state = ElementStates.Modified;
       updateState({ string: letters });
-    }
+    };
+
   };
 
   const inputHandler = (evt: React.FormEvent<HTMLInputElement>) => {
@@ -53,11 +58,11 @@ export const StringComponent: React.FC = () => {
     const letters:ILetter[] = state.inputValue.split('').map(letter => {
       return {letter, key: nanoid(10), state: ElementStates.Default}
     });
-    updateState({ string: letters });
-    await wait(500);
-    updateState({ buttonLoader: true });
+    updateState({ string: letters, buttonLoader: true});
+    await wait(SHORT_DELAY_IN_MS);
     await getAnimations(letters);
-    updateState({ buttonLoader: false })
+    await wait(SHORT_DELAY_IN_MS);
+    await updateState({ buttonLoader: false, buttonDisabled: true, inputValue: ''});
   };
 
   return (
@@ -69,6 +74,7 @@ export const StringComponent: React.FC = () => {
             extraClass={styles.input}
             onChange={inputHandler}
             type={"text"} isLimitText
+            value={state.inputValue}
           />
           <Button
             text={"Развернуть"}

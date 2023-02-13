@@ -8,9 +8,9 @@ import {Button} from "../ui/button/button";
 import {Circle} from "../ui/circle/circle";
 //стили
 import styles from "./fibonacci-page.module.css";
-import {fibonacci, initialState} from "./utils";
 // функции
-
+import {fibonacci, initialState} from "./utils";
+import {SHORT_DELAY_IN_MS} from "../../constants/delays";
 export const FibonacciPage: React.FC = () => {
 
   const [state, updateState] = useReducer<(state: IStateFibonacci, updates: any) => IStateFibonacci>(
@@ -20,28 +20,16 @@ export const FibonacciPage: React.FC = () => {
   const inputHandler = (evt: React.FormEvent<HTMLInputElement>) => {
     let input = evt.target as HTMLInputElement;
     let value = input.value.replace(/^\d{3}$/, '');
-    input.value
-      ? updateState({ buttonDisabled: false, inputValue: value })
-      : updateState({ buttonDisabled: true, inputValue: value });
+    if(Number(value) < 19) {
+      updateState({ buttonDisabled: false, inputValue: value })
+    }
+    else updateState({ buttonDisabled: true, inputValue: value });
   };
-
-  const fanny = (value: number | typeof NaN) => {
-    let number = value;
-    updateState({ number: number });
-    let result = window.confirm('Ну и для кого указан диапазон? Ох уж эта молодежь, не читает. Ты точно теперь введешь число 0 до 19?');
-    if (result) {
-      let number = Number(prompt('Давай пиши. И даже не вздумай писать символы или числа больше 19'));
-      updateState({ number: number, inputValue: number})
-      if((typeof(number) !== "number") || ((number < 1) || (number > 19)) || (isNaN(number))) fanny(number)
-    }
-    else alert('¯\\_(ツ)_/¯');
-  }
-  function buttonHandler () {
+  async function buttonHandler () {
     const value = Number(state.inputValue);
-    if ((value > 19) || (value < 1 ) || (isNaN(value))) fanny(value)
-    else {
-      updateState({ number: value });
-    }
+    updateState({ number: value, buttonLoader: true });
+    await(SHORT_DELAY_IN_MS);
+    updateState({ number: value, inputValue: '', buttonDisabled: true });
   };
   useEffect(() => {
     if(state.number) {

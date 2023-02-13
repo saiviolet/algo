@@ -59,3 +59,12 @@ export const circles:TQueue = (number) => {
   }
   return array;
 };
+
+export const testData = [
+  {name: 'recursion', title:'Строка'},
+  {name: 'fibonacci', title:'Последовательность Фибоначчи'},
+  {name: 'sorting', title:'Сортировка массива'},
+  {name: 'stack', title:'Стек'},
+  {name: 'queue', title:'Очередь'},
+  {name: 'list', title:'Связный список'},
+];

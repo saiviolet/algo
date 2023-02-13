@@ -9,11 +9,8 @@ export interface IAnimation {
   array?: IArrayColumns[]
 }
 
-export interface IAnimations {
-  animations: IAnimation[];
-}
-export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
-export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => IAnimations;
+export type TBubbleSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => { animations: IAnimation[], array: number[] };
+export type TSelectSort = (array: IArrayColumns[], type: 'ascending' | 'descending') => { animations: IAnimation[], array: number[] };
 export type AnimationTypes = 'add' | 'delete' | 'clear';
 export type TQueueAnimation = (queue: IQueue<string>, updateState: React.Dispatch<any>, type: AnimationTypes, state?: IQueuePage) => void;
 export type TStackAnimation = (stack: IStack<string>, updateState:React.Dispatch<any>, type: AnimationTypes) => void;

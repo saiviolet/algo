@@ -2,6 +2,7 @@ import {IStack, IStackPage, TStackAnimation} from "../../types/components";
 import {nanoid} from "nanoid";
 import {ElementStates} from "../../types/element-states";
 import {wait} from "../../utils/utils";
+import {SHORT_DELAY_IN_MS} from "../../constants/delays";
 export class Stack<T> implements IStack<T> {
   private container: T[] = [];
 
@@ -30,8 +31,8 @@ export const initialState:IStackPage = {
   },
   buttonBlocks: {
     addBtn: true,
-    deleteBtn: false,
-    clearBtn: false,
+    deleteBtn: true,
+    clearBtn: true,
   },
   array: [],
 };
@@ -45,7 +46,7 @@ export const stackAnimations:TStackAnimation = async (stack, updateState, type) 
         if(index === arrayLength) return {number, key: nanoid(10), state: ElementStates.Changing, top: true};
         return {number, key: nanoid(10), state: ElementStates.Default, top: false}
       })});
-    await wait(500);
+    await wait(SHORT_DELAY_IN_MS);
     updateState({inputValue: '', array: array.map((number, index) => {
         if(index === arrayLength) return {number, key: nanoid(10), state: ElementStates.Default, top: true};
         return {number, key: nanoid(10), state: ElementStates.Default, top: false}
@@ -56,14 +57,14 @@ export const stackAnimations:TStackAnimation = async (stack, updateState, type) 
         if(index === arrayLength) return {number, key: nanoid(10), state: ElementStates.Changing, top: true};
         return {number, key: nanoid(10), state: ElementStates.Default}
       })});
-    await wait(500);
+    await wait(SHORT_DELAY_IN_MS);
     updateState({inputValue: '', array: array.map((number, index) => {
         if(index === arrayLength) return {number, key: nanoid(10), state: ElementStates.Default, top: true};
         return {number, key: nanoid(10), state: ElementStates.Default, top: false}
       })});
     break;
   case 'clear':
-    updateState({array});
+    updateState({ array });
     break;
   default:
     alert( "LOL" );
